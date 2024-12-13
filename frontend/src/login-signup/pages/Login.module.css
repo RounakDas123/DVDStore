@@ -133,7 +133,8 @@ form .form-content .input-box{
     position: relative;
 }
 
-.form-content .input-box input{
+.form-content .input-box input
+{
     height: 100%;
     width: 100%;
     outline: none;
@@ -145,6 +146,7 @@ form .form-content .input-box{
     transition: all 0.3s ease;
    
 }
+
 
 .form-content .input-box input:focus::placeholder {
     color: #7d2ae8;
@@ -163,8 +165,8 @@ form .form-content .input-box{
      border-color: #c8a7f4;
    }
  }
-.form-content .input-box input:focus,
-.form-content .input-box input:valid{
+.form-content .input-box input:focus
+{
     border-color: #7d2ae8;  
 }    
 
@@ -173,6 +175,9 @@ form .form-content .input-box{
     color: #7d2ae8;
     font-size: 17px;
 }
+
+
+
 
 form .form-content .text{
     font-size: 14px;
@@ -230,3 +235,14 @@ form .form-content .login-text{
     display: none;
     
 }
+
+.control-error {
+    color: red;
+    font-size: 0.8rem;
+    height: 1rem;
+    /* padding: 0.5rem 0; */
+  }
+  
+  .control-error p {
+    margin: 0;
+  }
