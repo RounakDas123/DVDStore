@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import { useHistory} from 'react-router-dom';
 
 import classes from './Login.module.css';
 
+
 const Login = () => {
+// document.getElementsByTagName('body').class= `${classes["body-style"]}`; 
+useEffect(() => {
+    document.body.classList.add(`${classes["body-style"]}`);  // here explicitly setting the style for body, root for this component only.
+    document.getElementById("root").classList.add(`${classes["container-root"]}`);
+}, []);
+
+const navigate = useHistory();
+
+
 const [loginValues, setLoginValues] = useState({    //for updating state of login page inputs
     email : '',
     password : '',
@@ -76,6 +87,9 @@ function handleSubmit(event) // this function is called when submitting the form
             email : false
         }
     });
+    document.body.classList.remove(`${classes["body-style"]}`); // this is done to remove the styles of body,root before redirecting.
+    document.getElementById("root").classList.remove(`${classes["container-root"]}`);
+    navigate.push("/home");
 }
 
 function handleInputChange(section,identifier, value) //this function is called on every keystroke in input element(onChange event)
@@ -198,7 +212,7 @@ function handleShowPassword(section,identifier)//this function is called to show
                         
                         <div className={`${classes.button} ${classes["input-box"]}`}>
                             
-                            <input type="submit" name="login" value="Login"/>
+                            <input type="submit" name="login" value="Login" />
                             
                         </div>
                         <div className={`${classes.text} ${classes["login-text"]}`}>Don't have an account? <label htmlFor={classes.flip}>Signup now</label></div>

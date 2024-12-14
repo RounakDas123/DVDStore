@@ -6,7 +6,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-body{
+.body-style{
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -22,6 +22,15 @@ body{
     width: 100%;
     background: #fff;
     padding: 40px 30px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    perspective: 2700px;
+}
+
+.container-root{
+    position: relative;
+    max-width: 1000px;
+    width: 100%;
+    background: #fff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     perspective: 2700px;
 }
