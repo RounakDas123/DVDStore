@@ -178,11 +178,12 @@
    outline: none;
    margin-top: 7px;
    cursor: pointer;
-   
+   transition: 0.5s;
 }
 
 .heart:hover{
-  color: rgb(255, 75, 75);  
+  color: rgb(255, 75, 75);
+  transform: scale(1.5);  
 }
 
 .heart-active {
@@ -193,6 +194,7 @@
   margin-top: 7px;
   cursor: pointer;
   color: #9e0220;
+  transform: scale(1.5);
  }
 
 
@@ -203,11 +205,12 @@
    outline: none;
    margin-top: 7px;
    cursor: pointer;
-   
+   transition: 0.5s;
 }
 
 .cart:hover{
   color: #7dc470;  
+  transform: scale(1.5);
 }
 
 .cart-active {
@@ -218,6 +221,7 @@
   margin-top: 7px;
   cursor: pointer;
   color: #2cff05;
+  transform: scale(1.5);
  }
 
 .currency{
@@ -240,3 +244,4 @@
   border: none;
   background: none
 }
+

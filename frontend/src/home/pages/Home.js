@@ -1,5 +1,6 @@
 import React,{useEffect, useState, useCallback} from "react";
 import { TbCurrencyRupee } from "react-icons/tb";
+import {BrowserRouter as Router} from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import classes from './Home.module.css';
 import Wishlistbutton from "../../buttons/Wishlistbutton";
 import Cartbutton from "../../buttons/Cartbutton";
+import MainNavigation from '../../navbar/pages/MainNavigation';
 
 const Home = () => {
 
@@ -45,6 +47,10 @@ const Home = () => {
   console.log(movieList);
 
   return (
+    <>
+    <Router>
+      <MainNavigation />
+    </Router>
     <div className={classes["container-carousel"]}>
       <div className={classes.overall}>
       <Slider {...settings}>  
@@ -80,7 +86,7 @@ const Home = () => {
             </button>
             </div>
           </div>
-          
+           
         </div>
       )
     )
@@ -88,6 +94,7 @@ const Home = () => {
     </Slider>
       </div>
     </div>
+    </>
 )
 };
 
