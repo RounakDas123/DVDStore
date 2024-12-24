@@ -39,7 +39,8 @@ const Home = () => {
     <SearchOverlay />
 
     {(loader) ? (<img src="./loader.svg" style={{width:"370", height:"290"}} />) :
-    <Carousel movieList={movieList} type={"movie"} modalType={"homemovie"}/>}
+    <><Carousel movieList={movieList} type={"movie"} modalType={"homemovie"}/>
+    <Carousel movieList={movieList} type={"movie"} modalType={"homemovie"}/></>}
      
     </>
 )

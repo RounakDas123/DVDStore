@@ -3,15 +3,15 @@ import { RiHeart3Fill } from "react-icons/ri";
 
 import classes from '../home/pages/Home.module.css';
 
-function Wishlistbutton() {
+function Wishlistbutton({toggleHeart,changeColor}) {
 
-    const  [toggleHeart, setToggleHeart] = useState(false);
- const changeColor = () =>{
-    setToggleHeart(!toggleHeart);
-   };
+//     const  [toggleHeart, setToggleHeart] = useState(false);
+//  const changeColor = () =>{
+//     setToggleHeart(!toggleHeart);
+//    };
 
   return (
-    <RiHeart3Fill className={`${!toggleHeart ? classes.heart : classes["heart-active"]}`} onClick={changeColor} />
+    <RiHeart3Fill className={`${!toggleHeart ? classes.heart : classes["heart-active"]}`} onClick={() => {changeColor("heart")}} />
   )
 }
 

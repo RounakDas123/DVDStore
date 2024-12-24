@@ -9,6 +9,7 @@ import Wishlistbutton from "../../buttons/Wishlistbutton";
 import Cartbutton from "../../buttons/Cartbutton";
 import {movieDetailsActions} from '../../store/index';
 import DetailsModal from "./DetailsModal";
+import Overview from './Overview';
 
 
 function Carousel({movieList, type, modalType}) {
@@ -67,7 +68,7 @@ function Carousel({movieList, type, modalType}) {
     <DetailsModal ref={modalType === "homemovie" ? dialog_homemov : modalType === "searchmovie" ? dialog_searchmov 
       : modalType === "searchtv" ? dialog_searchtv : null} movieid={selectedMovieId} type={type} modalType={modalType}/>
     <div className={classes["container-carousel"]}>
-      <div className={classes.overall}>
+      
       <Slider {...settings}>  
       {
       movieList.map((movie)=>(
@@ -80,7 +81,7 @@ function Carousel({movieList, type, modalType}) {
             <span className={classes[`${getColor(movie.vote_average)}`]}>{(movie.vote_average).toFixed(1)}</span>
           </div>
 
-          <div className={classes.overview}>
+          {/* <div className={classes.overview}>
             <div className={classes.text}>
               {movie.overview}
             </div>
@@ -100,14 +101,15 @@ function Carousel({movieList, type, modalType}) {
               <Cartbutton />
             </button>
             </div>
-          </div>
+          </div> */}
+          <Overview movie={movie} onClick={openModal}/>
            
         </div>
       )
     )
     }
     </Slider>
-      </div>
+      
     </div>
     </>
   )

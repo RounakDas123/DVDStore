@@ -65,6 +65,34 @@ const searchDetailsSlice = createSlice({
     }
 });
 
+const cardButtonsSlice = createSlice({
+    name: 'cardButtons',
+    initialState : {wishlistCounter : 0, cartCounter : 0},
+    reducers : {
+        increment(state, action){
+            if(action.payload === "heart")
+            {
+                state.wishlistCounter = state.wishlistCounter + 1;
+            }
+            else if(action.payload === "cart")
+            {
+                state.cartCounter = state.cartCounter + 1;
+            }
+            
+        },
+        decrement(state, action){
+            if(action.payload === "heart")
+            {
+                state.wishlistCounter = state.wishlistCounter - 1;
+            }
+            else if(action.payload === "cart")
+            {
+                state.cartCounter = state.cartCounter - 1;
+            }
+        }
+    }
+});
+
 // const counterReducer = (state = initialState ,action) => {
 
 //     if(action.type==='showOverlay')
@@ -82,11 +110,13 @@ const searchDetailsSlice = createSlice({
 const store = configureStore({
     reducer: {searchOverlay : searchOverlaySlice.reducer,
               movieDetails  : movieDetailsSlice.reducer,
-              searchDetails : searchDetailsSlice.reducer},
+              searchDetails : searchDetailsSlice.reducer,
+              cardbuttons   : cardButtonsSlice.reducer},
 });
 
 export const searchOverlayActions = searchOverlaySlice.actions;
 export const movieDetailsActions = movieDetailsSlice.actions;
 export const searchDetailsActions = searchDetailsSlice.actions;
+export const cardbuttonsActions = cardButtonsSlice.actions;
 
 export default store;
