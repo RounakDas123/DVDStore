@@ -1,5 +1,6 @@
 const express= require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const HttpError = require('./models/http-error');
 const wishlistRoutes = require('./routes/wishlist-routes');
@@ -24,4 +25,11 @@ app.use((error,req,res,next) => {
 
 });
 
-app.listen(5000);
+mongoose
+.connect('mongodb+srv://Rounak744:7hHk34G@cluster0.pbpbz.mongodb.net/dvdapp?retryWrites=true&w=majority&appName=Cluster0')
+.then(()=>{
+    app.listen(5000);
+})
+.catch((err)=>{
+    console.log(err);
+});

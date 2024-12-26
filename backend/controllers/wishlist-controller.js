@@ -1,97 +1,113 @@
 const HttpError = require('../models/http-error');
+const Wishlist = require('../models/wishlist');
 
-const DUMMY_WISH = [
-    {
-        wishlist_id : 1,
-        user_id : 1,
-        movie_tv : [{
-            id: 121212,
-            type: 'movie',
-            title: 'Venom',
-            price: 100
-        },
-        {
-            id: 565656,
-            type: 'tv',
-            title: 'Dexter',
-            price: 200
-        }]
-    },
-    {
-        wishlist_id : 2,
-        user_id : 5,
-        movie_tv : [{
-            id: 589589,
-            type: 'movie',
-            title: 'Avengers',
-            price: 150
-        }]       
-    }
-];
 
-const getWishlistbyUserid = (req,res,next) => {
+const getWishlistbyUserid = async (req, res, next) => {
     const userId = req.params.uid;
-    const wishList = DUMMY_WISH.find(w => {
-        return w.user_id === +userId;
-    });
 
-    if(!wishList)
-    {
-        return next(new HttpError('Could not find user by the provided id',404));
+    let wishlist;
+    try {
+        wishlist = await Wishlist.findOne({ user_id: userId });
+    } catch (err) {
+        const error = new HttpError('Fetching wishlist failed, please try again later.', 500);
+        return next(error);
     }
 
-    res.json({wishList});
+    if (!wishlist) {
+        return next(new HttpError('Could not find a wishlist for the provided user ID.', 404));
+    }
+
+    res.status(200).json({ wishlist });
 };
 
-const addItem = (req,res,next)=>{
+
+const addItem = async (req, res, next) => {
     const userId = req.params.uid;
-    const {id, type, title, price} = req.body;
-    const newItem={
+    const { id, type, title, price } = req.body;
+
+    const newItem = {
         id,
         type,
         title,
         price
     };
 
-    const wishlistbyId = DUMMY_WISH.find(item => item.user_id === +userId);
-
-    if (!wishlistbyId) {
-        return next(new HttpError('Could not find user by the provided id', 404));
+    let wishlist;
+    try {
+        wishlist = await Wishlist.findOne({ user_id: userId });
+    } catch (err) {
+        const error = new HttpError('Fetching wishlist failed, please try again later.', 500);
+        return next(error);
     }
 
-    wishlistbyId.movie_tv.push(newItem);
-    res.status(201).json(newItem);
+    if (!wishlist) {
+        const error = new HttpError('Could not find a wishlist for the provided user ID.', 404);
+        return next(error);
+    }
 
+    wishlist.movie_tv.push(newItem);
+
+    try {
+        await wishlist.save();
+    } catch (err) {
+        const error = new HttpError('Adding item to wishlist failed, please try again.', 500);
+        return next(error);
+    }
+    res.status(201).json({ message: 'Item added successfully!', wishlist });
 };
 
-const removeItem = (req, res, next) => {
+
+const removeItem = async (req, res, next) => {
     const userId = req.params.uid;
-    const itemId = req.params.itemId; 
+    const itemId = req.params.itemId;
 
-    const wishlistbyId = DUMMY_WISH.find(item => item.user_id === +userId);
-    if (!wishlistbyId) {
-        return next(new HttpError('Could not find user by the provided id', 404));
+    let wishlist;
+    try {
+        wishlist = await Wishlist.findOne({ user_id: userId });
+    } catch (err) {
+        const error = new HttpError('Fetching wishlist failed, please try again later.', 500);
+        return next(error);
     }
-    const itemIndex = wishlistbyId.movie_tv.findIndex(item => item.id === +itemId);
+    if (!wishlist) {
+        return next(new HttpError('Could not find a wishlist for the provided user ID.', 404));
+    }
+
+    const itemIndex = wishlist.movie_tv.findIndex(item => item.id === +itemId);
     if (itemIndex === -1) {
-        return next(new HttpError('Could not find item with the provided id', 404));
+        return next(new HttpError('Could not find the item with the provided ID.', 404));
     }
 
-    const removedItem = wishlistbyId.movie_tv.splice(itemIndex, 1);
+    const removedItem = wishlist.movie_tv.splice(itemIndex, 1);
+
+    try {
+        await wishlist.save();
+    } catch (err) {
+        const error = new HttpError('Removing item from wishlist failed, please try again.', 500);
+        return next(error);
+    }
     res.status(200).json({
         message: 'Item removed successfully',
         removedItem: removedItem[0]
     });
 };
 
-const getWishlistSize = (req, res, next) => {
-    const userId = req.params.uid; 
-    const wishlistbyId = DUMMY_WISH.find(item => item.user_id === +userId);
 
-    if (!wishlistbyId) {
-        return next(new HttpError('Could not find user by the provided ID', 404));
+const getWishlistSize = async (req, res, next) => {
+    const userId = req.params.uid;
+
+    let wishlist;
+    try {
+        wishlist = await Wishlist.findOne({ user_id: userId });
+    } catch (err) {
+        const error = new HttpError('Fetching wishlist failed, please try again later.', 500);
+        return next(error);
     }
-    const wishlistSize = wishlistbyId.movie_tv.length;
+
+    if (!wishlist) {
+        return next(new HttpError('Could not find a wishlist for the provided user ID.', 404));
+    }
+
+    const wishlistSize = wishlist.movie_tv.length;
 
     res.status(200).json({
         userId: userId,
@@ -99,9 +115,37 @@ const getWishlistSize = (req, res, next) => {
     });
 };
 
+const createWishlist = async (userId) => {
+    
+    let existingWishlist;
+    try {
+        existingWishlist = await Wishlist.findOne({ user_id: userId });
+    } catch (err) {
+        throw new Error('Checking for existing wishlist failed.');
+    }
+    
+    if (existingWishlist) {
+        throw new Error('Wishlist already exists for this user.');
+    }
+    
+    const newWishlist = new Wishlist({
+        //wishlist_id: new mongoose.Types.ObjectId(), 
+        user_id: userId,
+        movie_tv: [] 
+    });
+    
+    try {
+        await newWishlist.save();
+    } catch (err) {
+        throw new Error('Creating the wishlist failed.');
+    }
+    
+    return newWishlist;
+};
 
 
 exports.getWishlistbyUserid = getWishlistbyUserid;
 exports.addItem = addItem;
 exports.removeItem = removeItem;
 exports.getWishlistSize= getWishlistSize;
+exports.createWishlist= createWishlist;
