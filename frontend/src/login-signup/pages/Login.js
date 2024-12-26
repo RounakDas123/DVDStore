@@ -1,5 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { useHistory} from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import classes from './Login.module.css';
 
@@ -304,6 +306,7 @@ function handleShowPassword(section,identifier)//this function is called to show
             </div>
 
         </form>
+        <ToastContainer />
     </div>
     );
 }

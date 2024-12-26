@@ -1,0 +1,38 @@
+.editcontainer {
+    position: absolute; /* Use absolute or fixed for exact placement */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the form */
+    width: 90%; /* Make it responsive */
+    max-width: 500px; /* Limit the max width */
+    padding: 20px;
+    background-color: #f8f9fa; /* Add a light background for contrast */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    z-index: 2; /* Ensure it is above other elements */
+  }
+  
+  /* body {
+    background-color: var(--primary-color); 
+  } */
+  
+  .fieldContainer {
+    margin-bottom: 15px;
+  }
+  
+  .editcontainer button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #12352f;
+    color: #ffffff;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .editcontainer button:hover {
+    background: #051715;
+  }
+  

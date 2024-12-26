@@ -14,7 +14,7 @@ function Profilebutton() {
     <>
       <CgProfile className={`${!toggleProfile ? classes.profile : classes["profile-active"]}`} onClick={showMenu} />
       {
-        toggleProfile && <DropDownProfile/>
+        toggleProfile && <DropDownProfile onClick={showMenu}/>
       }     
     </>
     )
