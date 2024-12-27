@@ -3,11 +3,14 @@ import { FaUserAlt } from "react-icons/fa";
 import { VscSignOut } from "react-icons/vsc"; 
 import { Link,useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
 import classes from './DropDownProfile.module.css';
+import { userInfoActions } from '../../store';
 
 function DropDownProfile({onClick}) { 
   const history = useHistory();
+  const dispatch = useDispatch();
   const handleLogout = () => {
     onClick(); // Close the dropdown
     toast.success("You have successfully logged out!",{
@@ -18,9 +21,15 @@ function DropDownProfile({onClick}) {
       pauseOnHover: false, 
       draggable: false, 
     });
-    setTimeout(() => {
-      history.push('/'); // Redirect to the login page
-    }, 1000); // Delay to allow toast to display
+    dispatch(userInfoActions.setUserInfo({
+      user: {},
+      token: null
+  }));
+  
+    localStorage.removeItem('userinfo');
+    localStorage.removeItem('token');
+
+    history.push('/');
   };
 
   return (

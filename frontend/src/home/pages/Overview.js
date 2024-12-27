@@ -1,6 +1,7 @@
 import React,{use, useState} from 'react';
 import { TbCurrencyRupee } from "react-icons/tb";
 import { useSelector,useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import classes from './Home.module.css';
 import Wishlistbutton from "../../buttons/Wishlistbutton";
@@ -19,6 +20,8 @@ function Overview({movie, onClick }) {
   console.log(value);
 
   const changeColor = (identifier) =>{
+    toast.success(`You have clicked ${identifier} !`);
+
     setToggleSymbol((prevValues)=>{
         var toggle,prevValue ;
 

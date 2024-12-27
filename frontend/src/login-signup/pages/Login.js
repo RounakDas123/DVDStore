@@ -1,9 +1,10 @@
 import React, { useState,useEffect } from 'react';
 import { useHistory} from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
 import classes from './Login.module.css';
+import { userInfoActions } from '../../store';
 
 
 const Login = () => {
@@ -14,7 +15,7 @@ useEffect(() => {
 }, []);
 
 const navigate = useHistory();
-
+const dispatch = useDispatch();
 
 const [loginValues, setLoginValues] = useState({    //for updating state of login page inputs
     email : '',
@@ -49,18 +50,55 @@ const emailLoginIsInvalid = didEdit.login.email && !loginValues.email.includes('
 const nameSignupIsInvalid = didEdit.signup.name && !signupValues.name.match(/^[a-zA-Z]+$/); //for validation signup name 
 const emailSignupIsInvalid = didEdit.signup.email && !signupValues.email.includes('@'); //for validation signup email 
 
-function handleSubmit(event) // this function is called when submitting the form
+async function handleSubmit(event) // this function is called when submitting the form
 {
     event.preventDefault();
     var buttonName = event.nativeEvent.submitter.name;
     if (buttonName === 'login')
     {
         console.log(loginValues);
+        try{
+            const response = await fetch('http://localhost:5000/api/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email_id : loginValues.email, 
+                    password : loginValues.password
+                })
+            });
+            const responseData = await response.json();
+            console.log(responseData);
+            if(!responseData.ok && !responseData.user)
+            {
+                toast.error(responseData.message);
+                return;
+            }           
+            toast.success(responseData.message);
+            dispatch(userInfoActions.setUserInfo({
+                user: responseData.user,
+                token: responseData.token
+            }));
+            if (responseData.token) {
+                localStorage.setItem('userinfo', JSON.stringify(responseData.user));
+                localStorage.setItem('token', responseData.token);
+            }
+        }
+        catch(err){
+            console.log(err);
+        }
+
+
         setLoginValues({ //for setting all the fields to initial state, i.e, resetting the form after successful submission.
             email : '',
             password : '',
             pwd_show: true
         });
+
+        document.body.classList.remove(`${classes["body-style"]}`); // this is done to remove the styles of body,root before redirecting.
+        document.getElementById("root").classList.remove(`${classes["container-root"]}`);
+        navigate.push("/home");
     }
     else if (buttonName === 'signup')
     {
@@ -70,6 +108,33 @@ function handleSubmit(event) // this function is called when submitting the form
             setPwdNotEqual(true);
             return;
         }
+        try{
+            const response = await fetch('http://localhost:5000/api/users/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id : 1, 
+                    user_name : signupValues.name, 
+                    email_id : signupValues.email, 
+                    password : signupValues.password
+                })
+            });
+            const responseData = await response.json();
+            console.log(responseData);
+            if(!responseData.ok && !responseData.user)
+            {
+                toast.error(responseData.message);
+                return;
+            }           
+            toast.success(responseData.message);
+            
+        }
+        catch(err){
+            console.log(err);
+        }
+        
         setSignupValues({
             name: '',
             email : '',
@@ -78,7 +143,12 @@ function handleSubmit(event) // this function is called when submitting the form
             pwd_show: true,
             conf_pwd_show: true
         });
-        
+        // Flip the checkbox for signup
+        const flipCheckbox = document.getElementById(classes.flip);
+        if (flipCheckbox) {
+            var state= flipCheckbox.checked;
+            flipCheckbox.checked = !state; // Set the checkbox to checked
+        }
     } 
     setDidEdit({  // setting the states for checking edited or not to initial values
         login:{
@@ -89,9 +159,7 @@ function handleSubmit(event) // this function is called when submitting the form
             email : false
         }
     });
-    document.body.classList.remove(`${classes["body-style"]}`); // this is done to remove the styles of body,root before redirecting.
-    document.getElementById("root").classList.remove(`${classes["container-root"]}`);
-    navigate.push("/home");
+    
 }
 
 function handleInputChange(section,identifier, value) //this function is called on every keystroke in input element(onChange event)
@@ -165,6 +233,28 @@ function handleShowPassword(section,identifier)//this function is called to show
     
 }
 
+function resetForm(id){
+    if(id==="signup")
+    {
+        setSignupValues({
+            name: '',
+            email : '',
+            password : '',
+            confirm_password: '',
+            pwd_show: true,
+            conf_pwd_show: true
+        });
+    }
+    else if(id==="login")
+    {
+        setLoginValues({ //for setting all the fields to initial state, i.e, resetting the form 
+            email : '',
+            password : '',
+            pwd_show: true
+        });
+    }
+}
+
     return (
         <div className={classes.container}>
         <input type="checkbox" id={classes.flip} />
@@ -217,7 +307,7 @@ function handleShowPassword(section,identifier)//this function is called to show
                             <input type="submit" name="login" value="Login" />
                             
                         </div>
-                        <div className={`${classes.text} ${classes["login-text"]}`}>Don't have an account? <label htmlFor={classes.flip}>Signup now</label></div>
+                        <div className={`${classes.text} ${classes["login-text"]}`}>Don't have an account? <label htmlFor={classes.flip} onClick={()=>{resetForm("signup")}}>Signup now</label></div>
                     </div>
                 </div>
                 <div className={classes["signup-form"]}>
@@ -300,13 +390,12 @@ function handleShowPassword(section,identifier)//this function is called to show
                             <input type="submit" name="signup" value="Signup" />
                             
                         </div>
-                        <div className={`${classes.text} ${classes["sign-up-text"]}`}>Already have an account? <label htmlFor={classes.flip}>Login now</label></div>
+                        <div className={`${classes.text} ${classes["sign-up-text"]}`}>Already have an account? <label htmlFor={classes.flip} onClick={()=>{resetForm("login")}}>Login now</label></div>
                     </div>
                 </div>
             </div>
 
         </form>
-        <ToastContainer />
     </div>
     );
 }

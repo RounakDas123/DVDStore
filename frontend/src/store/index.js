@@ -93,6 +93,17 @@ const cardButtonsSlice = createSlice({
     }
 });
 
+const userInfoSlice = createSlice({
+    name:'userinfo',
+    initialState : {user : {}, token: null},
+    reducers: {
+        setUserInfo(state,action) {
+            state.user = action.payload.user;
+            state.token = action.payload.token;
+        }
+    }
+});
+
 // const counterReducer = (state = initialState ,action) => {
 
 //     if(action.type==='showOverlay')
@@ -111,12 +122,14 @@ const store = configureStore({
     reducer: {searchOverlay : searchOverlaySlice.reducer,
               movieDetails  : movieDetailsSlice.reducer,
               searchDetails : searchDetailsSlice.reducer,
-              cardbuttons   : cardButtonsSlice.reducer},
+              cardbuttons   : cardButtonsSlice.reducer,
+              userInfo      : userInfoSlice.reducer},
 });
 
 export const searchOverlayActions = searchOverlaySlice.actions;
 export const movieDetailsActions = movieDetailsSlice.actions;
 export const searchDetailsActions = searchDetailsSlice.actions;
 export const cardbuttonsActions = cardButtonsSlice.actions;
+export const userInfoActions = userInfoSlice.actions;
 
 export default store;
