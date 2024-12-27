@@ -52,7 +52,7 @@ const addItem = async(req,res,next)=>{
         const error = new HttpError('Adding item to cart failed, please try again.', 500);
         return next(error);
     }
-    res.status(201).json({ message: 'Item added successfully!', cart });
+    res.status(201).json({ message: 'Added to Cart successfully!', cart });
 
 };
 
@@ -85,7 +85,7 @@ const removeItem = async(req, res, next) => {
         return next(error);
     }
     res.status(200).json({
-        message: 'Item removed successfully',
+        message: 'Removed from Cart successfully!',
         removedItem: removedItem[0]
     });
 

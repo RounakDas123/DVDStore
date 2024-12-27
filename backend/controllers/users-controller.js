@@ -1,5 +1,6 @@
 const HttpError = require('../models/http-error');
 const bcrypt= require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { createWishlist } = require('./wishlist-controller');
 const { createCart } = require('./cart-controller');
@@ -51,7 +52,18 @@ const signup = async (req, res, next) => {
         return next(new HttpError('Failed to create cart for the user, please try again later.', 500));
     }
 
-    res.status(201).json({ user: createdUser });
+    let token;
+    try{
+        token = jwt.sign({userId: createdUser.user_id, email: createdUser.email_id}, 
+        'key_das_rounak_secret', 
+        {expiresIn: '1h'}
+    );
+    }catch(err){
+        return next(new HttpError('Signup failed, please try again.', 500));
+    }
+    
+
+    res.status(201).json({ message:"You have successfully signed up!",user: createdUser, token:token });
 };
 
 
@@ -80,7 +92,18 @@ const login = async (req, res, next) => {
         const error = new HttpError('Invalid credentials, could not log you in.', 401);
         return next(error);
     }
-    res.status(200).json({ message: 'Logged in successfully!', user: { id: identifiedUser.user_id, email: identifiedUser.email_id } });
+
+    let token;
+    try{
+        token = jwt.sign({userId: identifiedUser.user_id, email: identifiedUser.email_id}, 
+        'key_das_rounak_secret', 
+        {expiresIn: '1h'}
+    );
+    }catch(err){
+        return next(new HttpError('Signup failed, please try again.', 500));
+    }
+
+    res.status(200).json({ message: 'You have logged in successfully!', user: { id: identifiedUser.user_id, name:identifiedUser.user_name ,email: identifiedUser.email_id }, token:token });
 };
 
 const updateProfile = async (req, res, next) => {

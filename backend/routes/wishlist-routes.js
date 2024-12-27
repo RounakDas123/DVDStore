@@ -2,6 +2,9 @@ const express= require('express');
 const router = express.Router();
 
 const wishlistController = require('../controllers/wishlist-controller');
+const checkAuth = require('../middleware/check-auth');
+
+router.use(checkAuth);
 
 router.get('/user/:uid', wishlistController.getWishlistbyUserid);
 

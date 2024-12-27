@@ -53,7 +53,7 @@ const addItem = async (req, res, next) => {
         const error = new HttpError('Adding item to wishlist failed, please try again.', 500);
         return next(error);
     }
-    res.status(201).json({ message: 'Item added successfully!', wishlist });
+    res.status(201).json({ message: 'Added to Wishlist successfully!', wishlist });
 };
 
 
@@ -86,7 +86,7 @@ const removeItem = async (req, res, next) => {
         return next(error);
     }
     res.status(200).json({
-        message: 'Item removed successfully',
+        message: 'Removed from Wishlist successfully!',
         removedItem: removedItem[0]
     });
 };
