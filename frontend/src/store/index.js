@@ -70,7 +70,7 @@ const cardButtonsSlice = createSlice({
     initialState : {wishlistCounter : 0, cartCounter : 0},
     reducers : {
         increment(state, action){
-            if(action.payload === "heart")
+            if(action.payload === "wishlist")
             {
                 state.wishlistCounter = state.wishlistCounter + 1;
             }
@@ -81,13 +81,24 @@ const cardButtonsSlice = createSlice({
             
         },
         decrement(state, action){
-            if(action.payload === "heart")
+            if(action.payload === "wishlist")
             {
                 state.wishlistCounter = state.wishlistCounter - 1;
             }
             else if(action.payload === "cart")
             {
                 state.cartCounter = state.cartCounter - 1;
+            }
+        },
+        setInitialValue(state, action)
+        {
+            if(action.payload.type === "wishlist")
+            {
+                state.wishlistCounter = action.payload.value;
+            }
+            else if(action.payload.type === "cart")
+            {
+                state.cartCounter = action.payload.value;
             }
         }
     }
@@ -100,6 +111,24 @@ const userInfoSlice = createSlice({
         setUserInfo(state,action) {
             state.user = action.payload.user;
             state.token = action.payload.token;
+        }
+    }
+});
+
+const wishlistCartSlice = createSlice({
+    name:'wishlistcart',
+    initialState : {wishlist : [], cart: []},
+    reducers: {
+        setInitialValue(state, action)
+        {
+            if(action.payload.type === "wishlist")
+            {
+                state.wishlist = action.payload.value;
+            }
+            else if(action.payload.type === "cart")
+            {
+                state.cart = action.payload.value;
+            }
         }
     }
 });
@@ -123,7 +152,8 @@ const store = configureStore({
               movieDetails  : movieDetailsSlice.reducer,
               searchDetails : searchDetailsSlice.reducer,
               cardbuttons   : cardButtonsSlice.reducer,
-              userInfo      : userInfoSlice.reducer},
+              userInfo      : userInfoSlice.reducer,
+              wishlistCart  : wishlistCartSlice.reducer},
 });
 
 export const searchOverlayActions = searchOverlaySlice.actions;
@@ -131,5 +161,6 @@ export const movieDetailsActions = movieDetailsSlice.actions;
 export const searchDetailsActions = searchDetailsSlice.actions;
 export const cardbuttonsActions = cardButtonsSlice.actions;
 export const userInfoActions = userInfoSlice.actions;
+export const wishlistCartActions = wishlistCartSlice.actions;
 
 export default store;

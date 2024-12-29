@@ -102,7 +102,7 @@ function Carousel({movieList, type, modalType}) {
             </button>
             </div>
           </div> */}
-          <Overview movie={movie} onClick={openModal}/>
+          <Overview movie={movie} type={type} onClick={openModal}/>
            
         </div>
       )

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 import classes from './Login.module.css';
-import { userInfoActions } from '../../store';
+import { userInfoActions,cardbuttonsActions,wishlistCartActions } from '../../store';
 
 
 const Login = () => {
@@ -84,6 +84,78 @@ async function handleSubmit(event) // this function is called when submitting th
                 localStorage.setItem('userinfo', JSON.stringify(responseData.user));
                 localStorage.setItem('token', responseData.token);
             }
+
+            const response_wsize = await fetch(`http://localhost:5000/api/wishlist/size/${responseData.user.id}`,
+            {headers: {Authorization: 'Bearer '+responseData.token} } );
+            const responseData_wsize = await response_wsize.json();
+            console.log(responseData_wsize);
+            if(!responseData_wsize.ok && (responseData_wsize.wishlistSize === null || responseData_wsize.wishlistSize === undefined))
+            {
+                toast.error(responseData_wsize.message);
+                return;
+            }          
+            dispatch(cardbuttonsActions.setInitialValue({
+                type: "wishlist",
+                value: responseData_wsize.wishlistSize
+            }));
+            if (responseData_wsize.wishlistSize !== null && responseData_wsize.wishlistSize !== undefined) {
+                localStorage.setItem('wishlistSize', responseData_wsize.wishlistSize);
+            }
+
+            const response_csize = await fetch(`http://localhost:5000/api/cart/size/${responseData.user.id}`,
+                {headers: {Authorization: 'Bearer '+responseData.token} } );
+            const responseData_csize = await response_csize.json();
+            console.log(responseData_csize);
+            if(!responseData_csize.ok && (responseData_csize.cartSize === null || responseData_csize.cartSize === undefined))
+            {
+                toast.error(responseData_csize.message);
+                return;
+            }       
+            dispatch(cardbuttonsActions.setInitialValue({
+                type: "cart",
+                value: responseData_csize.cartSize
+            }));
+            if (responseData_csize.cartSize !== null && responseData_csize.cartSize !== undefined) {
+                localStorage.setItem('cartSize', responseData_csize.cartSize);
+            }
+
+            const wishlist = await fetch(`http://localhost:5000/api/wishlist/user/${responseData.user.id}`,
+                {headers: {Authorization: 'Bearer '+responseData.token} } );
+            const responseData_wishlist = await wishlist.json();
+            console.log(responseData_wishlist.wishlist);
+            if(!responseData_wishlist.ok && (!responseData_wishlist.wishlist))
+                {
+                    toast.error(responseData_wishlist.message);
+                    return;
+                }       
+                dispatch(wishlistCartActions.setInitialValue({
+                    type: "wishlist",
+                    value: responseData_wishlist.wishlist.movie_tv
+                }));
+                if (responseData_wishlist.wishlist !== null && responseData_wishlist.wishlist !== undefined
+                    && responseData_wishlist.wishlist.movie_tv !== null && responseData_wishlist.wishlist.movie_tv !== undefined
+                ) {
+                    localStorage.setItem('wishlist', JSON.stringify(responseData_wishlist.wishlist.movie_tv));
+                }
+
+
+            const cart = await fetch(`http://localhost:5000/api/cart/user/${responseData.user.id}`,
+                {headers: {Authorization: 'Bearer '+responseData.token} } );
+            const responseData_cart = await cart.json();
+            console.log(responseData_cart.cart);
+            if(!responseData_cart.ok && (!responseData_cart.cart))
+                {
+                    toast.error(responseData_cart.message);
+                    return;
+                }       
+                dispatch(wishlistCartActions.setInitialValue({
+                    type: "cart",
+                    value: responseData_cart.cart.movie_tv
+                }));
+                if (responseData_cart.cart !== null && responseData_cart.cart !== undefined) {
+                    localStorage.setItem('cart', JSON.stringify(responseData_cart.cart.movie_tv));
+                }
+
         }
         catch(err){
             console.log(err);

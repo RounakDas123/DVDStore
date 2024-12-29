@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -7,16 +7,24 @@ import { userInfoActions } from '../../store';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
-  // const userInfo = useSelector(state => state.userInfo.user); //fetch
-  const userInfo = JSON.parse(localStorage.getItem('userinfo'));
-  const userId = userInfo.id;
-  // Initial  data
+  const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userinfo')));
+
   const initialData = {
-    user_name: userInfo.name,
-    email_id: userInfo.email,
+    user_name: userInfo?.name || '',
+    email_id: userInfo?.email || '',
     password: '',
     retype_password: '',
   };
+  const userId = userInfo.id;
+  useEffect(() => {
+    // Sync form data with updated userInfo
+    setFormData({
+      user_name: userInfo?.name || '',
+      email_id: userInfo?.email || '',
+      password: '',
+      retype_password: '',
+    });
+  }, [userInfo]);
 
   // Form state
   const [formData, setFormData] = useState(initialData);
@@ -99,6 +107,13 @@ const EditProfile = () => {
     if (responseData.user) {
         localStorage.setItem('userinfo', JSON.stringify(responseData.user));
     }
+    setUserInfo(responseData.user);
+      setFormData({
+        user_name: responseData.user.name || '',
+        email_id: responseData.user.email || '',
+        password: '',
+        retype_password: '',
+      });
 
   }
   catch(err){
@@ -109,7 +124,6 @@ const EditProfile = () => {
     setIsUserNameEnabled(false);
     setIsEmailEnabled(false);
     setIsPasswordEnabled(false);
-    setFormData(initialData);
   };
 
   // Handle input changes

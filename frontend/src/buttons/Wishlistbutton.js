@@ -11,7 +11,7 @@ function Wishlistbutton({toggleHeart,changeColor}) {
 //    };
 
   return (
-    <RiHeart3Fill className={`${!toggleHeart ? classes.heart : classes["heart-active"]}`} onClick={() => {changeColor("heart")}} />
+    <RiHeart3Fill className={`${!toggleHeart ? classes.heart : classes["heart-active"]}`} onClick={() => {changeColor("wishlist")}} />
   )
 }
 

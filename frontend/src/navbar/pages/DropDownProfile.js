@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 import classes from './DropDownProfile.module.css';
-import { userInfoActions } from '../../store';
+import { userInfoActions, cardbuttonsActions, wishlistCartActions } from '../../store';
 
 function DropDownProfile({onClick}) { 
   const history = useHistory();
@@ -24,10 +24,30 @@ function DropDownProfile({onClick}) {
     dispatch(userInfoActions.setUserInfo({
       user: {},
       token: null
-  }));
+    }));
+    dispatch(cardbuttonsActions.setInitialValue({
+      type: "wishlist",
+      value: 0
+    }));
+    dispatch(cardbuttonsActions.setInitialValue({
+        type: "cart",
+        value: 0
+    }));
+    dispatch(wishlistCartActions.setInitialValue({
+      type: "wishlist",
+      value: []
+    }));
+    dispatch(wishlistCartActions.setInitialValue({
+      type: "cart",
+      value: []
+    }));
   
     localStorage.removeItem('userinfo');
     localStorage.removeItem('token');
+    localStorage.removeItem('wishlistSize');
+    localStorage.removeItem('cartSize');
+    localStorage.removeItem('wishlist');
+    localStorage.removeItem('cart');
 
     history.push('/');
   };
