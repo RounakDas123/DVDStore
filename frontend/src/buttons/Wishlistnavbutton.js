@@ -1,17 +1,16 @@
 import React,{useState, useEffect} from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { TfiViewListAlt } from "react-icons/tfi";
+import { useHistory, useLocation } from "react-router-dom";
 
 import classes from '../navbar/pages/MainNavigation.module.css';
 import { cardbuttonsActions } from '../store';
 
 function Wishlistnavbutton() {
-  const  [toggleList, setToggleList] = useState(false);
-  const openList = () =>{
-    setToggleList(!toggleList);
-  };  
+  const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
-
+  const isActive = location.pathname === "/wishlist";
 
   const changeBadgeValue = useSelector(state => state.cardbuttons.wishlistCounter);
 
@@ -24,12 +23,20 @@ function Wishlistnavbutton() {
     }));
   }, [dispatch]);
 
+  const openWishlist = () => {
+    history.push("/wishlist"); // Always navigate to /wishlist
+  };
+
   return (
     <>
-    <TfiViewListAlt className={`${!toggleList ? classes.wishlistnav : classes["wishlistnav-active"]}`} onClick={openList} />
-    <span className={classes["icon-buttonbadge"]}>{changeBadgeValue}</span>
+      <TfiViewListAlt
+        className={`${isActive ? classes["wishlistnav-active"] : classes.wishlistnav}`}
+        onClick={openWishlist}
+      />
+      <span className={classes["icon-buttonbadge"]}>{changeBadgeValue}</span>
     </>
-  )
-};
+  );
+
+}
 
 export default Wishlistnavbutton;

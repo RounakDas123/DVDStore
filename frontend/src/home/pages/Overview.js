@@ -28,18 +28,6 @@ function Overview({movie, type, onClick }) {
   console.log("movie.id:", movie.id);
 
   // Check if the movie is already in the wishlist
-  /*useEffect(() => {
-    const isItemInWishlist = wishlistItems.some(item => item.id === movie.id);
-    if (isItemInWishlist) {
-      setToggleSymbol(prev => ({ ...prev, wishlist: true }));
-    }
-
-    const isItemInCart = cartItems.some(item => item.id === movie.id);
-    if (isItemInCart) {
-      setToggleSymbol(prev => ({ ...prev, cart: true }));
-    }
-
-  }, [wishlistItems, cartItems ,movie.id]);*/
   useEffect(() => {
     const isItemInWishlist = wishlistItems.some(item => item.id === movie.id);
     const isItemInCart = cartItems.some(item => item.id === movie.id);
