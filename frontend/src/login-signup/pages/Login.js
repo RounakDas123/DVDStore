@@ -187,7 +187,6 @@ async function handleSubmit(event) // this function is called when submitting th
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user_id : 1, 
                     user_name : signupValues.name, 
                     email_id : signupValues.email, 
                     password : signupValues.password

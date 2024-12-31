@@ -60,18 +60,22 @@ function Overview({movie, type, onClick }) {
 
             //fetch
             try{
+              const bodyData = {
+                id: movie.id,
+                type: type,
+                title: movie.title,
+                price: 100
+              };
+              if (identifier === 'cart') {
+                bodyData.quantity = 1; 
+              }
               const response_add = await fetch(`http://localhost:5000/api/${identifier}/add/${userId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer '+token
                 },
-                body: JSON.stringify({
-                  id: movie.id,
-                  type: type,
-                  title: movie.title,
-                  price: 100
-                })
+                body: JSON.stringify(bodyData)
               });
               const responseData_add = await response_add.json();
                   console.log(responseData_add);
@@ -81,9 +85,16 @@ function Overview({movie, type, onClick }) {
                      return;
                   }           
                  toast.success(responseData_add.message); 
-
-                localStorage.setItem(`${identifier}Size`, responseData_add[identifier].movie_tv.length );
-                dispatch(cardbuttonsActions.setInitialValue({type:`${identifier}`, value:responseData_add[identifier].movie_tv.length}));
+                 let size = 0;
+                 if (identifier === 'cart') {
+                   size = responseData_add.cart.movie_tv.reduce((sum, item) => sum + Number(item.quantity), 0);
+                 } else if (identifier === 'wishlist') {
+                   size = responseData_add.wishlist.movie_tv.length;
+                 }
+                 console.log("both are false: ", size);
+                 console.log("both are false: ", responseData_add);
+                localStorage.setItem(`${identifier}Size`, size );
+                dispatch(cardbuttonsActions.setInitialValue({type:`${identifier}`, value:size }));
                 
                 localStorage.setItem(`${identifier}`, JSON.stringify(responseData_add[identifier].movie_tv));
                 dispatch(wishlistCartActions.setInitialValue({type:`${identifier}`, value:responseData_add[identifier].movie_tv}));
@@ -148,7 +159,8 @@ function Overview({movie, type, onClick }) {
                     id: movie.id,
                     type: type,
                     title: movie.title,
-                    price: 100
+                    price: 100,
+                    quantity: 1
                   })
                 });
                 const responseData_add = await response_add.json();
@@ -159,9 +171,12 @@ function Overview({movie, type, onClick }) {
                        return;
                     }           
                    toast.success(responseData_add.message); 
+
+                   let size = 0;
+                   size = responseData_add.cart.movie_tv.reduce((sum, item) => sum + item.quantity, 0);
   
-                  localStorage.setItem('cartSize', responseData_add.cart.movie_tv.length );
-                  dispatch(cardbuttonsActions.setInitialValue({type:'cart', value:responseData_add.cart.movie_tv.length}));
+                  localStorage.setItem('cartSize', size );
+                  dispatch(cardbuttonsActions.setInitialValue({type:'cart', value:size }));
 
                   localStorage.setItem('cart', JSON.stringify(responseData_add.cart.movie_tv));
                   dispatch(wishlistCartActions.setInitialValue({type:'cart', value:responseData_add.cart.movie_tv}));
@@ -226,9 +241,12 @@ function Overview({movie, type, onClick }) {
                            return;
                         }           
                        toast.success(responseData_remove.message); 
+
+                       let size = 0;
+                       size = responseData_remove[identifier].movie_tv.reduce((sum, item) => sum + item.quantity, 0); 
       
-                      localStorage.setItem(`${identifier}Size`, responseData_remove[identifier].movie_tv.length );
-                      dispatch(cardbuttonsActions.setInitialValue({type:`${identifier}`, value:responseData_remove[identifier].movie_tv.length}));
+                      localStorage.setItem(`${identifier}Size`, size );
+                      dispatch(cardbuttonsActions.setInitialValue({type:`${identifier}`, value:size }));
                       
                       localStorage.setItem(`${identifier}`, JSON.stringify(responseData_remove[identifier].movie_tv));
                       dispatch(wishlistCartActions.setInitialValue({type:`${identifier}`, value:responseData_remove[identifier].movie_tv}));
@@ -294,9 +312,12 @@ function Overview({movie, type, onClick }) {
                            return;
                         }           
                        toast.success(responseData_remove.message); 
+
+                       let size = 0;
+                       size = responseData_remove.cart.movie_tv.reduce((sum, item) => sum + item.quantity, 0);
       
-                      localStorage.setItem('cartSize', responseData_remove.cart.movie_tv.length );
-                      dispatch(cardbuttonsActions.setInitialValue({type:'cart', value:responseData_remove.cart.movie_tv.length}));
+                      localStorage.setItem('cartSize', size );
+                      dispatch(cardbuttonsActions.setInitialValue({type:'cart', value:size }));
 
                       localStorage.setItem('cart', JSON.stringify(responseData_remove.cart.movie_tv));
                       dispatch(wishlistCartActions.setInitialValue({type:'cart', value:responseData_remove.cart.movie_tv}));

@@ -8,6 +8,7 @@ import Home from './home/pages/Home';
 import MainNavigation from './navbar/pages/MainNavigation';
 import EditProfile from './home/pages/EditProfile';
 import Wishlist from './wishlist/pages/Wishlist';
+import Cart from './cart/pages/Cart';
 import PrivateRoute from './PrivateRoute';
 
 function App() {
@@ -44,6 +45,7 @@ const AppLayout = () => {
         <PrivateRoute path="/home" component={Home} />
         <PrivateRoute path="/edit-profile" component={EditProfile} />
         <PrivateRoute path="/wishlist" component={Wishlist} />
+        <PrivateRoute path="/cart" component={Cart} />
         <Route exact path="/" component={Login} />
       </Switch>
     </>

@@ -40,6 +40,7 @@ const ConfirmationModal = forwardRef(({item, userId, token, onWishlistUpdate,act
                 type: item.type,
                 title: item.title,
                 price: item.price,
+                quantity: 1
               }),
             }
           );
@@ -66,9 +67,12 @@ const ConfirmationModal = forwardRef(({item, userId, token, onWishlistUpdate,act
             return;
           }
           toast.success(responseDataRemove.message);
+
+          let size = 0;
+          size = responseDataAdd.cart.movie_tv.reduce((sum, item) => sum + item.quantity, 0);
   
-          localStorage.setItem('cartSize', responseDataAdd.cart.movie_tv.length );
-          dispatch(cardbuttonsActions.setInitialValue({type:'cart', value:responseDataAdd.cart.movie_tv.length}));
+          localStorage.setItem('cartSize', size );
+          dispatch(cardbuttonsActions.setInitialValue({type:'cart', value:size }));
           
           localStorage.setItem('cart', JSON.stringify(responseDataAdd.cart.movie_tv));
           dispatch(wishlistCartActions.setInitialValue({type:'cart', value:responseDataAdd.cart.movie_tv}));
