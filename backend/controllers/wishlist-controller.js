@@ -7,7 +7,7 @@ const getWishlistbyUserid = async (req, res, next) => {
 
     let wishlist;
     try {
-        wishlist = await Wishlist.findOne({ user_id: userId });
+        wishlist = await Wishlist.findOne({ user_id: userId }, { _id: 0 });
     } catch (err) {
         const error = new HttpError('Fetching wishlist failed, please try again later.', 500);
         return next(error);
@@ -53,7 +53,7 @@ const addItem = async (req, res, next) => {
         const error = new HttpError('Adding item to wishlist failed, please try again.', 500);
         return next(error);
     }
-    res.status(201).json({ message: 'Added to Wishlist successfully!', wishlist });
+    res.status(201).json({ message: 'Added to Wishlist successfully!', wishlist:wishlist });
 };
 
 
@@ -87,6 +87,7 @@ const removeItem = async (req, res, next) => {
     }
     res.status(200).json({
         message: 'Removed from Wishlist successfully!',
+        wishlist:wishlist,
         removedItem: removedItem[0]
     });
 };

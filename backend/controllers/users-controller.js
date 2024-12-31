@@ -7,7 +7,7 @@ const { createCart } = require('./cart-controller');
 
 
 const signup = async (req, res, next) => {
-    const { user_id, user_name, email_id, password } = req.body;
+    const {  user_name, email_id, password } = req.body;
     let existingUser;
 
     try {
@@ -25,6 +25,14 @@ const signup = async (req, res, next) => {
         hashedPassword = await bcrypt.hash(password, 12);
     } catch (err) {
         return next(new HttpError('Could not create user, please try again later.', 500));
+    }
+
+    let user_id;
+    try {
+        const maxUser = await User.findOne().sort({ user_id: -1 }).select('user_id');
+        user_id = maxUser ? maxUser.user_id + 1 : 1;
+    } catch (err) {
+        return next(new HttpError('Signup failed, unable to assign user ID.', 500));
     }
 
     const createdUser = new User({
@@ -143,9 +151,9 @@ const updateProfile = async (req, res, next) => {
     res.status(200).json({
         message: 'Profile updated successfully!',
         user: {
-            user_id: identifiedUser.user_id,
-            user_name: identifiedUser.user_name,
-            email_id: identifiedUser.email_id,
+            id: identifiedUser.user_id,
+            name: identifiedUser.user_name,
+            email: identifiedUser.email_id,
         }
     });
 
