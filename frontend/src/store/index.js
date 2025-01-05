@@ -69,27 +69,6 @@ const cardButtonsSlice = createSlice({
     name: 'cardButtons',
     initialState : {wishlistCounter : 0, cartCounter : 0},
     reducers : {
-        increment(state, action){
-            if(action.payload === "wishlist")
-            {
-                state.wishlistCounter = state.wishlistCounter + 1;
-            }
-            else if(action.payload === "cart")
-            {
-                state.cartCounter = state.cartCounter + 1;
-            }
-            
-        },
-        decrement(state, action){
-            if(action.payload === "wishlist")
-            {
-                state.wishlistCounter = state.wishlistCounter - 1;
-            }
-            else if(action.payload === "cart")
-            {
-                state.cartCounter = state.cartCounter - 1;
-            }
-        },
         setInitialValue(state, action)
         {
             if(action.payload.type === "wishlist")

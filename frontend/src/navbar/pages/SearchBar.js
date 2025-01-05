@@ -1,31 +1,29 @@
-import React,{useState} from 'react';
-import { useDispatch } from 'react-redux';
+import React,{useState,useEffect} from 'react';
+import { useDispatch,useSelector } from 'react-redux';
 import classes from './SearchBar.module.css';
 import {searchOverlayActions} from '../../store/index';
 import { searchDetailsActions } from '../../store/index';
 
 function SearchBar() {
-const [searchText, setSearchText] = useState('');
+  const dispatch = useDispatch();
 
-const dispatch = useDispatch();
+  const searchText = useSelector((state) => state.searchDetails.searchText);
+
+  useEffect(() => {
+    dispatch(searchDetailsActions.fillSearchText(searchText));
+  }, [searchText, dispatch]);
+
 
 const handleInputChange = (value) => {
   
   var textPresence = value.length>0;
   dispatch(searchOverlayActions.showOverlay(textPresence));
-  // if(value.length>0)
-  // {
-  //   dispatch({type : 'showOverlay'});
-  // }
-  // else{
-  //   dispatch({type : 'hideOverlay'});
-  // }
   if(!textPresence)
   {
     dispatch(searchDetailsActions.hideSearchCarousel());
     dispatch(searchDetailsActions.fillSearchText(''));
   }
-  setSearchText(value);
+  dispatch(searchDetailsActions.fillSearchText(value));
 };
 
 const handleSubmit = (event)=>{

@@ -6,7 +6,7 @@ import {movieDetailsActions} from '../../store/index';
 import classes from './Home.module.css';
 
 
-const DetailsModal = forwardRef(({movieid,type,modalType}, ref) => {
+const DetailsModal = forwardRef(({movieid,type}, ref) => {
 const dialog = useRef();
 const iframeRef = useRef();
 
@@ -19,6 +19,10 @@ useImperativeHandle(ref, ()=>{
       } else {
         console.error("Dialog element is not yet attached to the DOM.");
       }
+    },
+    close()
+    {
+      if (dialog.current) dialog.current.close();
     }  
   }
 });
@@ -34,17 +38,11 @@ const [loader, setLoader]=  useState(true);
     setLoader(false);
   }
 
-  // const getVideo = ()=>{
-  //   fetch(`https://api.themoviedb.org/3/${type}/${movieid}/videos?language=en-US&api_key=d987bb3825166942aa314c4768160995`)  
-  //   .then(res => res.json())
-  //   .then(json => setVideo((json.results).filter(data => (data.type === 'Trailer') )[0] ));
-  // }
 
     useEffect(()=>{
       if(movieid && type)
       {
         getDetails();
-        // getVideo();
       }
               
     },[movieid, type]);
@@ -56,26 +54,21 @@ const [loader, setLoader]=  useState(true);
     {
       var genres = details.genres;
       genreNames = genres.map(genre => genre.name).join(', ');
-      video = (details.videos.results).filter(data => (data.type === 'Trailer' && data.site==='YouTube') )[0] ;
+      video = (details.videos.results).filter(data => ((data.type === 'Trailer' || data.type === 'Teaser') && data.site==='YouTube') )[0] ;
     }
 
     console.log(details);
     console.log(video);
     
     
-
-const dispatch = useDispatch();
 const closeModal = (event)=>{
-    dispatch(movieDetailsActions.closeModal(modalType));
-    //Pause the YouTube video
     if (iframeRef.current) {
       iframeRef.current.contentWindow.postMessage(
         '{"event":"command","func":"pauseVideo","args":""}',
         '*'
       )
     }
-
-    // document.getElementById("modal").innerHTML = "";
+    ref.current.close();
   };
  
 
@@ -93,7 +86,7 @@ const closeModal = (event)=>{
            </div>) : (<div style={{width:"100%", display:"flex", justifyContent:"center"}}>
             <img src="./this-video-is-unavailable.jpg" style={{width:"370", height:"290",paddingBottom:"30px"}} /></div> )}
 
-        <h2> {details["original_title"]} </h2>
+        <h2> {type==="movie"?details["title"]:details["name"]} </h2>
         <h4>Overview</h4>
         <p>{details.overview}</p>
         <h4>Genre(s)</h4>

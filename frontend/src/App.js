@@ -9,6 +9,7 @@ import MainNavigation from './navbar/pages/MainNavigation';
 import EditProfile from './home/pages/EditProfile';
 import Wishlist from './wishlist/pages/Wishlist';
 import Cart from './cart/pages/Cart';
+import SearchOverlay from './home/pages/SearchOverlay';
 import PrivateRoute from './PrivateRoute';
 
 function App() {
@@ -31,6 +32,7 @@ const AppLayout = () => {
     <>
       {/* Conditionally render the MainNavigation */}
       {!shouldHideNavbar && <MainNavigation />}
+      <SearchOverlay />
       <ToastContainer 
         position="top-center" 
         autoClose={3000} 

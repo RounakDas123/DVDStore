@@ -2,6 +2,8 @@
 import React, { useState, useRef } from "react";
 import { RiHeart3Fill } from "react-icons/ri";
 import { MdDeleteForever } from "react-icons/md";
+import { TbCurrencyRupee } from "react-icons/tb";
+import { LuRefreshCw } from "react-icons/lu";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch } from 'react-redux';
 import { wishlistCartActions,cardbuttonsActions } from "../../store";
@@ -68,15 +70,25 @@ const Cart = () => {
 
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  const handleCartUpdate = () => {
+    const updatedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(updatedCart);
+  };
+
   return (
-    <>
+    <div className={styles.cartContainer}>
+      <div className={styles.header}>
+        <button className={styles.refreshButton} onClick={handleCartUpdate}>
+          <LuRefreshCw /> Refresh
+        </button>
+      </div>
       {cart.length === 0 ? (
           <div className={styles.emptyMessage}>
             Cart is empty! Please add something!
           </div>
         ) :
       
-      (<div className={styles.cartContainer}>
+      (<div className={styles.cartContainerinside}>
         <AnimatePresence>
           {cart.map((item) => (
             <motion.div
@@ -107,7 +119,7 @@ const Cart = () => {
                   +
                 </button>
               </div>
-              <p className={styles.itemPrice}>${(item.price * item.quantity).toFixed(2)}</p>
+              <p className={styles.itemPrice}><TbCurrencyRupee/>{(item.price * item.quantity).toFixed(2)}</p>
               <RiHeart3Fill
                 className={styles.icon}
                 onClick={() => handleIconClick(item, "wishlist")}
@@ -120,7 +132,7 @@ const Cart = () => {
           ))}
         </AnimatePresence>
         <div className={styles.totalContainer}>
-          <h3>Total: ${totalPrice.toFixed(2)}</h3>
+          <h3>Total: <TbCurrencyRupee/>{totalPrice.toFixed(2)}</h3>
         </div>
         <div className={styles.checkoutContainer}>
             <button className={styles.checkoutButton} onClick={handleCheckout}>
@@ -137,7 +149,7 @@ const Cart = () => {
         onCartUpdate={() => setCart(JSON.parse(localStorage.getItem("cart")) || [])}
         actionType={actionType}
       />
-    </>
+    </div>
   );
 };
 

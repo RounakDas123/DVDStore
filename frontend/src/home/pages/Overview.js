@@ -44,7 +44,8 @@ function Overview({movie, type, onClick }) {
       };
     });
   }, [wishlistItems, cartItems, movie.id]);
-  
+  var itemPrice = type === "movie" ? 100.00 : 200.00;
+  var title = type === "movie" ? movie.title : movie.name;
 
   const changeColor = async (identifier) =>{
 
@@ -53,18 +54,13 @@ function Overview({movie, type, onClick }) {
 
         if(currentWishlist===false && currentCart===false)
         {
-            //only increment will happen for 1st time
-            //update the value in DB. Only add. In above line we are already one state. But if somehow the browser is refreshed,
-            // the redux will be wiped. So we need to increment/decrement the localstorage at the same time.
-            // we can do something like we reset the value of redux state inside the navbutton before using .
-
             //fetch
             try{
               const bodyData = {
                 id: movie.id,
                 type: type,
-                title: movie.title,
-                price: 100
+                title: title,
+                price: itemPrice
               };
               if (identifier === 'cart') {
                 bodyData.quantity = 1; 
@@ -158,8 +154,8 @@ function Overview({movie, type, onClick }) {
                   body: JSON.stringify({
                     id: movie.id,
                     type: type,
-                    title: movie.title,
-                    price: 100,
+                    title: title,
+                    price: itemPrice,
                     quantity: 1
                   })
                 });
@@ -272,8 +268,8 @@ function Overview({movie, type, onClick }) {
                       body: JSON.stringify({
                         id: movie.id,
                         type: type,
-                        title: movie.title,
-                        price: 100
+                        title: title,
+                        price: itemPrice
                       })
                     });
                     const responseData_add = await response_add.json();
@@ -343,12 +339,12 @@ function Overview({movie, type, onClick }) {
               {movie.overview}
             </div>
             <span style={{fontSize : "12px",fontFamily: '"Times New Roman", Times, serif'}}>
-            <a href="#" onClick={(e) => onClick(e, movie.id)}>Know more</a>
+            <a href="#" onClick={onClick}>Know more</a>
             </span>
             <hr></hr>
             <span style={{float:"left",marginTop: "5px"}}> 
               <TbCurrencyRupee className={classes.currency}></TbCurrencyRupee> 
-              <span className={classes["currency-value"]}>{(100.00).toFixed(2)}</span>
+              <span className={classes["currency-value"]}>{(itemPrice).toFixed(2)}</span>
             </span>
             <div style={{float:"right"}}>
             <button className={classes["card-button"]}>

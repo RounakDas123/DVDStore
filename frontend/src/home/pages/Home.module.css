@@ -33,9 +33,68 @@
   {
     width: 75%;
     margin:auto;
-    margin-top: 5rem;
+    margin-top: 1rem;
   }
 
+  .carousel-container {
+    margin-bottom: 1rem;
+  }
+
+  .heading-container {
+    display: inline-block; 
+
+    padding-left: 10.5%;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .heading-container:hover {
+    background-color: #ffcc00;
+    transform: scale(1.05); 
+  }
+  
+  .heading {
+    font-size: 2rem;
+    color: #eee;
+    margin: 0;
+    text-align: left;
+    transition: color 0.3s ease;
+  }
+  
+  .heading-container:hover .heading {
+    color: #22254b; 
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 5rem;
+  }
+  
+  .homebutton {
+    background-color: var(--secondary-color);
+    color: #eee;
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .homebutton:hover {
+    background-color: #ffcc00;
+    transform: scale(1.1);
+  }
+  
+  .homebutton.active {
+    background-color: #ffcc00;
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+  
 
 .body{
     background-color: var(--primary-color);
@@ -116,32 +175,13 @@
     bottom:0;
     background-color: #fff;
     padding: 1rem;
-    /* max-height: 100%; */
     max-height: 390px;
     transform:translateY(101%);
     transition:transform 0.3s ease-in;
-    /* display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical; */  
-    /* display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;  */
-    /* line-clamp: 5;
-    overflow: hidden;
-    text-overflow: clip; */
-    /* overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 5; 
-  -webkit-box-orient: vertical;
-  text-overflow: unset; */
 }
 
 .overview .text{
   max-height: 143px;
-  /* line-clamp: 5;
-  overflow: hidden;
-  text-overflow: clip; */
-  /* top:0%; */
   font-size: 15px;
   font-family: "Times New Roman", Times, serif;
   overflow: hidden;
@@ -245,14 +285,14 @@
 .overlay {
   position: fixed;
   visibility: hidden;
-  opacity: 0;
+  opacity: 0.8;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.85);
   z-index: 40;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
@@ -274,6 +314,34 @@
   /* color: white;
   font-size: 2rem;
   text-align: center; */
+}
+
+.closeButton {
+  position: absolute;
+  top: 70px;
+  right: 70px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.closeButton:hover {
+  color: red;
+}
+.resultsCount {
+  color: white;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 5rem;
+}
+
+.scrollableContent {
+  padding: 1rem;
+  max-height: calc(100% - 100px);
+  overflow-y: auto;
 }
 
 .infoModal {

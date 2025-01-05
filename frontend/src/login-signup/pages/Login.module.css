@@ -69,11 +69,12 @@
     transform: rotateY(-180deg);
 }
 
-.container #flip:checked ~ .cover{
+.container #flip:checked ~ .cover {
     transform: rotateY(-180deg);
-
-  }
-
+}
+.container #flip:checked ~ .cover img{
+    transform: rotateY(-180deg);
+}
 
 .container .cover img{
     position: absolute;
@@ -81,7 +82,7 @@
     width: 100%;
     object-fit: cover;
     z-index: 112;
-
+    transition: transform 1s ease;
     
 }
 

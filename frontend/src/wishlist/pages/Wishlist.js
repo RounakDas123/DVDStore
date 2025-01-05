@@ -2,6 +2,8 @@ import React,{useState,useRef} from "react";
 import { motion } from "framer-motion";
 import { IoMdCart } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
+import { LuRefreshCw } from "react-icons/lu";
+import { TbCurrencyRupee } from "react-icons/tb";
 
 import ConfirmationModal from "./ConfirmationModal";
 import classes from "./Wishlist.module.css";
@@ -42,7 +44,12 @@ const Wishlist = () => {
   };
 
   return (
-    <>
+    <div className={classes.wishlistContainer}>
+    <div className={classes.header}>
+        <button className={classes.refreshButton} onClick={handleWishlistUpdate}>
+          <LuRefreshCw /> Refresh
+        </button>
+      </div>
     {wishlist.length === 0 ? (
           <div className={classes.emptyMessage}>
             Wishlist is empty! Please add something!
@@ -60,7 +67,7 @@ const Wishlist = () => {
         >
           <div className={classes.type}>{item.type.toUpperCase()}</div>
           <div className={classes.title}>{item.title}</div>
-          <div className={classes.price}>${item.price}</div>
+          <div className={classes.price}><TbCurrencyRupee/>{item.price}</div>
           <div className={classes.actions}>
             <IoMdCart className={classes.icon} onClick={() => handleCartClick(item)} />
             <MdDeleteForever className={classes.icon} onClick={() => handleDeleteClick(item)}/>
@@ -78,7 +85,7 @@ const Wishlist = () => {
     actionType={actionType}
     />
 
-    </>
+    </div>
   );
 };
 

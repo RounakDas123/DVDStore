@@ -1,7 +1,7 @@
-.cartContainer {
+.cartContainerinside {
     padding: 20px;
     max-width: 600px;
-    margin: 100px auto 0; 
+    margin: 0px auto 0; 
     overflow: visible;
   }
   
@@ -113,7 +113,39 @@
   .checkoutButton:hover {
     background-color: #218838;
   }
+
+  .cartContainer {
+    margin-top: 80px; 
+    padding: 20px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    margin-bottom: 20px;
+  }
   
+  .refreshButton {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .refreshButton:hover {
+    transform: scale(1.1);
+  }
+  
+  .refreshButton svg {
+    margin-right: 8px;
+  }
   
   @keyframes rowAnimation {
     0% {

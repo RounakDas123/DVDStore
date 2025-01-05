@@ -332,8 +332,7 @@ function resetForm(id){
         <div className={classes.cover}>
             <div className={classes.front}>
                 <img src="logo.jpg" alt="" />
-            </div>
-            
+            </div>     
         </div>
         <form name="login" onSubmit={handleSubmit} >
             <div className={classes["form-content"]}>
