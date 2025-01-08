@@ -1,119 +1,106 @@
 .wishlist {
-    padding: 20px;
-    max-width: 600px;
-    margin: 0px auto 0;
-    left: 35%;
-    background-color: transparent;
-    z-index: 20;
-    overflow: visible;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0px auto 0;
+  left: 35%;
+  background-color: transparent;
+  z-index: 20;
+  overflow: visible;
+}
 
-  }
-  
-  .wishlistItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .wishlistItem:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .type {
-    font-size: 14px;
-    font-weight: bold;
-    flex-basis: 20%;
-    text-align: left;
-  }
-  
-  .title {
-    font-size: 14px;
-    flex-basis: 40%;
-    text-align: left;
-  }
-  
-  .price {
-    font-size: 14px;
-    flex-basis: 20%;
-    text-align: center;
-  }
-  
-  .actions {
-    flex-basis: 20%;
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .icon {
-    cursor: pointer;
-    font-size: 20px;
-    color: #333;
-    transition: color 0.2s ease;
-  }
-  
-  .icon:hover {
-    color: #007bff;
-  }
+.wishlistItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-  .emptyMessage{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    color: white;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    /* color: white;
-    font-size: 2rem;
-    text-align: center; */
-  }
-  
-  .wishlistContainer {
-    margin-top: 80px; /* Adjust this value based on the height of your navbar */
-    padding: 20px;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: flex-end; 
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .refreshButton {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-  
-  .refreshButton:hover {
-    transform: scale(1.1);
-  }
-  
-  .refreshButton svg {
-    margin-right: 8px;
-  }
-  
-  
-  /* .emptyMessage {
-    text-align: center;
-    font-size: 18px;
-    color: gray;
-  } */
-  
-  
+.wishlistItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.type {
+  font-size: 14px;
+  font-weight: bold;
+  flex-basis: 20%;
+  text-align: left;
+}
+
+.title {
+  font-size: 14px;
+  flex-basis: 40%;
+  text-align: left;
+}
+
+.price {
+  font-size: 14px;
+  flex-basis: 20%;
+  text-align: center;
+}
+
+.actions {
+  flex-basis: 20%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.icon {
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.icon:hover {
+  color: #007bff;
+}
+
+.emptyMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.wishlistContainer {
+  margin-top: 80px;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.refreshButton {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.refreshButton:hover {
+  transform: scale(1.1);
+}
+
+.refreshButton svg {
+  margin-right: 8px;
+}

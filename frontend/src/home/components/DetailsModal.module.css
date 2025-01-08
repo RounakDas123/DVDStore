@@ -1,0 +1,77 @@
+.infoModal {
+  border: none;
+  border-radius: 8px;
+  padding: 2rem;
+  background-color: #d7fcf8;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 50;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.infoModal[open] {
+  animation: slide-in-from-top 0.35s ease-out;
+}
+
+.infoModal::backdrop {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.infoModal h2 {
+  font-family: "Handjet", monospace;
+  margin: 0 0 1.25rem 0;
+  font-size: 3rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.infoModal h4 {
+  font-family: "Handjet", monospace;
+  margin: 1rem 0 0.25rem 0;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.infoModal p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.infoModal p strong {
+  color: #10655b;
+}
+
+.infoModal form {
+  text-align: right;
+}
+
+.infoModal button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #12352f;
+  color: #edfcfa;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.infoModal button:hover {
+  background: #051715;
+}
+
+@keyframes slide-in-from-top {
+  from {
+    transform: translate(-50%, -150%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}

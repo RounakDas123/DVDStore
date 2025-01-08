@@ -1,160 +1,159 @@
 .cartContainerinside {
-    padding: 20px;
-    max-width: 600px;
-    margin: 0px auto 0; 
-    overflow: visible;
-  }
-  
-  .cartItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ddd;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: white;
-    overflow: visible;
-    
-    width: 100%; 
-    max-width: 700px; 
-    transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease;
-    margin: 0 auto; 
-    position: relative;
-  }
-  .cartItem:hover {
-    transform: translateY(-5px);
-    transform-origin: center; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 10; 
-  }
-  .cartItem:not(:last-child) {
-    margin-bottom: 15px; 
-  }
-  .itemDetails {
-    flex: 1;
-  }
-  
-  .itemType {
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 0;
-  }
-  
-  .itemTitle {
-    margin: 0;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .itemControls {
-    display: flex;
-    align-items: center;
-  }
-  
-  .counterButton {
-    background-color: #ddd;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 3px;
-  }
-  
-  .quantity {
-    margin: 0 10px;
-    font-size: 16px;
-  }
-  
-  .itemPrice {
-    font-weight: bold;
-    margin: 0 10px;
-  }
-  
-  .icon {
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  .deleteIcon {
-    color: red;
-  }
-  
-  .totalContainer {
-    text-align: right;
-    margin-top: 20px;
-  }
+  padding: 20px;
+  max-width: 600px;
+  margin: 0px auto 0;
+  overflow: visible;
+}
 
-  .emptyMessage{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    color: white;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-  }
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+  overflow: visible;
 
-  .checkoutContainer {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .checkoutButton {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .checkoutButton:hover {
-    background-color: #218838;
-  }
+  width: 100%;
+  max-width: 700px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease;
+  margin: 0 auto;
+  position: relative;
+}
+.cartItem:hover {
+  transform: translateY(-5px);
+  transform-origin: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+.cartItem:not(:last-child) {
+  margin-bottom: 15px;
+}
+.itemDetails {
+  flex: 1;
+}
 
-  .cartContainer {
-    margin-top: 80px; 
-    padding: 20px;
-  }
+.itemType {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0;
+}
 
-  .header {
-    display: flex;
-    justify-content: flex-end; 
-    align-items: center;
-    margin-bottom: 20px;
+.itemTitle {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.itemControls {
+  display: flex;
+  align-items: center;
+}
+
+.counterButton {
+  background-color: #ddd;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 3px;
+}
+
+.quantity {
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.itemPrice {
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.deleteIcon {
+  color: red;
+}
+
+.totalContainer {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.emptyMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.checkoutContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.checkoutButton {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.checkoutButton:hover {
+  background-color: #218838;
+}
+
+.cartContainer {
+  margin-top: 80px;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.refreshButton {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.refreshButton:hover {
+  transform: scale(1.1);
+}
+
+.refreshButton svg {
+  margin-right: 8px;
+}
+
+@keyframes rowAnimation {
+  0% {
+    transform: scale(0);
+    opacity: 0;
   }
-  
-  .refreshButton {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s;
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
-  
-  .refreshButton:hover {
-    transform: scale(1.1);
-  }
-  
-  .refreshButton svg {
-    margin-right: 8px;
-  }
-  
-  @keyframes rowAnimation {
-    0% {
-      transform: scale(0);
-      opacity: 0;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-  
+}

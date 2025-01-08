@@ -1,10 +1,9 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
-// import { isAuthenticated } from './utils/authUtils';
+import { jwtDecode } from "jwt-decode";
+import React from "react";
+import { Redirect, Route } from "react-router-dom";
 
 const isAuthenticated = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) return false;
 
   try {
@@ -14,19 +13,15 @@ const isAuthenticated = () => {
   } catch (error) {
     return false;
   }
-}
+};
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/" />
-        )
-      }
-    />
-  );
-  
-  export default PrivateRoute;
+  <Route
+    {...rest}
+    render={(props) =>
+      isAuthenticated() ? <Component {...props} /> : <Redirect to="/" />
+    }
+  />
+);
+
+export default PrivateRoute;

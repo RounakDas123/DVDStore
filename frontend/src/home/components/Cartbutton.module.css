@@ -1,0 +1,25 @@
+.cart {
+  font-size: 25px;
+  color: rgb(182, 173, 173);
+  width: 35px;
+  outline: none;
+  margin-top: 7px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.cart:hover {
+  color: #7dc470;
+  transform: scale(1.5);
+}
+
+.cart-active {
+  font-size: 25px;
+  color: rgb(182, 173, 173);
+  width: 35px;
+  outline: none;
+  margin-top: 7px;
+  cursor: pointer;
+  color: #2cff05;
+  transform: scale(1.5);
+}

@@ -1,0 +1,57 @@
+.overview {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  padding: 1rem;
+  max-height: 390px;
+  transform: translateY(101%);
+  transition: transform 0.3s ease-in;
+  transform: var(--overview-transform, translateY(101%));
+  padding-bottom: var(--overview-padding, 0);
+}
+
+.overview .text {
+  max-height: 143px;
+  font-size: 15px;
+  font-family: "Times New Roman", Times, serif;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  vertical-align: top;
+}
+
+.overview .text:hover {
+  transition-duration: 0.2s;
+}
+
+.overview span {
+  float: right;
+}
+
+hr {
+  display: inline-block;
+  width: 100%;
+}
+
+.currency {
+  font-size: 15px;
+  width: 20px;
+  outline: none;
+  margin-top: 7px;
+}
+
+.currency-value {
+  font-size: 15px;
+  width: 25px;
+  outline: none;
+  margin-top: 3px;
+}
+
+.card-button {
+  padding: 0;
+  border: none;
+  background: none;
+}

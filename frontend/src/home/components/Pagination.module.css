@@ -1,0 +1,28 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-right: 10.5%;
+}
+
+.pageButton {
+  background-color: var(--secondary-color);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pageButton:hover {
+  background-color: #ffcc00;
+  transform: scale(1.05);
+}
+
+.active {
+  background-color: #ffcc00;
+  color: #22254b;
+  font-weight: bold;
+}
