@@ -18,12 +18,12 @@ app.use(bodyParser.json());
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
     next();
 });*/
-// app.use(cors({
-//     origin: '*', // Allow all origins (change to specific domain for production)
-//     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-//     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
-// }));
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow all origins (change to specific domain for production)
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+}));
+// app.use(cors());
 
 app.use('/api/wishlist',wishlistRoutes);
 app.use('/api/cart',cartRoutes);
