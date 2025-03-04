@@ -1,6 +1,7 @@
 const express= require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const HttpError = require('./models/http-error');
 const wishlistRoutes = require('./routes/wishlist-routes');
@@ -10,12 +11,18 @@ const userRoutes = require('./routes/users-routes');
 const app = express();
 
 app.use(bodyParser.json());
-app.use((req,res,next)=>{
+/*app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
     next();
-});
+});*/
+app.use(cors({
+    origin: '*', // Allow all origins (change to specific domain for production)
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+}));
+
 app.use('/api/wishlist',wishlistRoutes);
 app.use('/api/cart',cartRoutes);
 app.use('/api/users',userRoutes);
