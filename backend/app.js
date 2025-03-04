@@ -1,8 +1,8 @@
 const express= require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-// const cors = require('cors');
-import cors from 'cors';
+const cors = require('cors');
+// import cors from 'cors';
 
 const HttpError = require('./models/http-error');
 const wishlistRoutes = require('./routes/wishlist-routes');
