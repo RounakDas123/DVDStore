@@ -63,7 +63,7 @@ const signup = async (req, res, next) => {
     let token;
     try{
         token = jwt.sign({userId: createdUser.user_id, email: createdUser.email_id}, 
-        'key_das_rounak_secret', 
+            process.env.JWT_KEY, 
         {expiresIn: '1h'}
     );
     }catch(err){
@@ -104,7 +104,7 @@ const login = async (req, res, next) => {
     let token;
     try{
         token = jwt.sign({userId: identifiedUser.user_id, email: identifiedUser.email_id}, 
-        'key_das_rounak_secret', 
+            process.env.JWT_KEY, 
         {expiresIn: '1h'}
     );
     }catch(err){

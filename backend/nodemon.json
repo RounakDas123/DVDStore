@@ -1,1 +1,9 @@
+{
+    "env":{
+        "DB_USER": "Rounak656ProdREST",
+        "DB_PASSWORD": "H6cFa5i34",
+        "DB_NAME": "dvdapp_prod_rest",
+        "JWT_KEY": "key_das_rounak_secret"
+    }
+}
 

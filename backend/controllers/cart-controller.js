@@ -83,7 +83,7 @@ const updateQuantity = async (req, res, next) => {
         const error = new HttpError('Invalid identifier. Use "increase" or "decrease".', 400);
         return next(error);
     }
-    console.log('after inside else delete item', cart.movie_tv);
+
     try {
         await cart.save();
     } catch (err) {

@@ -11,9 +11,8 @@ module.exports = (req,res,next) => {
         if(!token){
             throw new HttpError('Authentication failed!', 401);
         }
-        const decodeToken = jwt.verify(token, 'key_das_rounak_secret');
+        const decodeToken = jwt.verify(token, process.env.JWT_KEY);
         req.userData = {userId: decodeToken.userId};
-        console.log(req.userData);
         next();
     }catch(err)
     {
