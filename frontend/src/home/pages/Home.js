@@ -25,7 +25,7 @@ const Home = () => {
     topRatedTv: 1,
   });
 
-  const apiKey = "d987bb3825166942aa314c4768160995";
+  const apiKey = process.env.REACT_APP_API_KEY;
 
   function checkData(data) {
     if (contentType === "movie") {

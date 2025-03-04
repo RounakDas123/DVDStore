@@ -61,7 +61,7 @@ function Overview({ movie, type, onClick }) {
           bodyData.quantity = 1;
         }
         const response_add = await fetch(
-          `http://localhost:5000/api/${identifier}/add/${userId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/${identifier}/add/${userId}`,
           {
             method: "POST",
             headers: {
@@ -117,7 +117,7 @@ function Overview({ movie, type, onClick }) {
         // /api/wishlist/delete/5/939243
         try {
           const response_remove = await fetch(
-            `http://localhost:5000/api/${identifier}/delete/${userId}/${movie.id}`,
+            `${process.env.REACT_APP_BACKEND_URL}/${identifier}/delete/${userId}/${movie.id}`,
             {
               method: "DELETE",
               headers: {
@@ -164,7 +164,7 @@ function Overview({ movie, type, onClick }) {
       } else {
         try {
           const response_add = await fetch(
-            `http://localhost:5000/api/cart/add/${userId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/cart/add/${userId}`,
             {
               method: "POST",
               headers: {
@@ -214,7 +214,7 @@ function Overview({ movie, type, onClick }) {
 
         try {
           const response_remove = await fetch(
-            `http://localhost:5000/api/wishlist/delete/${userId}/${movie.id}`,
+            `${process.env.REACT_APP_BACKEND_URL}/wishlist/delete/${userId}/${movie.id}`,
             {
               method: "DELETE",
               headers: {
@@ -264,7 +264,7 @@ function Overview({ movie, type, onClick }) {
       if (identifier === "cart") {
         try {
           const response_remove = await fetch(
-            `http://localhost:5000/api/${identifier}/delete/${userId}/${movie.id}`,
+            `${process.env.REACT_APP_BACKEND_URL}/${identifier}/delete/${userId}/${movie.id}`,
             {
               method: "DELETE",
               headers: {
@@ -314,7 +314,7 @@ function Overview({ movie, type, onClick }) {
       } else {
         try {
           const response_add = await fetch(
-            `http://localhost:5000/api/wishlist/add/${userId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/wishlist/add/${userId}`,
             {
               method: "POST",
               headers: {
@@ -363,7 +363,7 @@ function Overview({ movie, type, onClick }) {
 
         try {
           const response_remove = await fetch(
-            `http://localhost:5000/api/cart/delete/${userId}/${movie.id}`,
+            `${process.env.REACT_APP_BACKEND_URL}/cart/delete/${userId}/${movie.id}`,
             {
               method: "DELETE",
               headers: {

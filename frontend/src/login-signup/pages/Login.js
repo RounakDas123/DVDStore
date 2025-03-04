@@ -64,7 +64,8 @@ const Login = () => {
     var buttonName = event.nativeEvent.submitter.name;
     if (buttonName === "login") {
       try {
-        const response = await fetch("http://localhost:5000/api/users/login", {
+        console.log("Environment Variables:", process.env);
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/users/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -92,7 +93,7 @@ const Login = () => {
         }
 
         const response_wsize = await fetch(
-          `http://localhost:5000/api/wishlist/size/${responseData.user.id}`,
+          `${process.env.REACT_APP_BACKEND_URL}/wishlist/size/${responseData.user.id}`,
           { headers: { Authorization: "Bearer " + responseData.token } }
         );
         const responseData_wsize = await response_wsize.json();
@@ -119,7 +120,7 @@ const Login = () => {
         }
 
         const response_csize = await fetch(
-          `http://localhost:5000/api/cart/size/${responseData.user.id}`,
+          `${process.env.REACT_APP_BACKEND_URL}/cart/size/${responseData.user.id}`,
           { headers: { Authorization: "Bearer " + responseData.token } }
         );
         const responseData_csize = await response_csize.json();
@@ -146,7 +147,7 @@ const Login = () => {
         }
 
         const wishlist = await fetch(
-          `http://localhost:5000/api/wishlist/user/${responseData.user.id}`,
+          `${process.env.REACT_APP_BACKEND_URL}/wishlist/user/${responseData.user.id}`,
           { headers: { Authorization: "Bearer " + responseData.token } }
         );
         const responseData_wishlist = await wishlist.json();
@@ -174,7 +175,7 @@ const Login = () => {
         }
 
         const cart = await fetch(
-          `http://localhost:5000/api/cart/user/${responseData.user.id}`,
+          `${process.env.REACT_APP_BACKEND_URL}/cart/user/${responseData.user.id}`,
           { headers: { Authorization: "Bearer " + responseData.token } }
         );
         const responseData_cart = await cart.json();
@@ -220,7 +221,7 @@ const Login = () => {
         return;
       }
       try {
-        const response = await fetch("http://localhost:5000/api/users/signup", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/users/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

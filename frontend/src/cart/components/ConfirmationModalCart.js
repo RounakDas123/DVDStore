@@ -27,7 +27,7 @@ const ConfirmationModalCart = forwardRef(
       try {
         if (actionType === "checkout") {
           const responseRemove = await fetch(
-            `http://localhost:5000/api/cart/checkout/${userId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/cart/checkout/${userId}`,
             {
               method: "DELETE",
               headers: {
@@ -66,7 +66,7 @@ const ConfirmationModalCart = forwardRef(
         } else {
           if (actionType === "wishlist") {
             const responseAdd = await fetch(
-              `http://localhost:5000/api/wishlist/add/${userId}`,
+              `${process.env.REACT_APP_BACKEND_URL}/wishlist/add/${userId}`,
               {
                 method: "POST",
                 headers: {
@@ -90,7 +90,7 @@ const ConfirmationModalCart = forwardRef(
 
             // Remove from Cart API call
             const responseRemove = await fetch(
-              `http://localhost:5000/api/cart/delete/${userId}/${item.id}`,
+              `${process.env.REACT_APP_BACKEND_URL}/cart/delete/${userId}/${item.id}`,
               {
                 method: "DELETE",
                 headers: {
@@ -150,7 +150,7 @@ const ConfirmationModalCart = forwardRef(
             );
           } else if (actionType === "delete") {
             const response_remove = await fetch(
-              `http://localhost:5000/api/cart/delete/${userId}/${item.id}`,
+              `${process.env.REACT_APP_BACKEND_URL}/cart/delete/${userId}/${item.id}`,
               {
                 method: "DELETE",
                 headers: {

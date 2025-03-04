@@ -78,7 +78,7 @@ function SearchOverlay() {
 
   const getSearchResults = () => {
     fetch(
-      `https://api.themoviedb.org/3/search/movie?language=en-US&api_key=d987bb3825166942aa314c4768160995&query=${searchText}&with_original_language=en`
+      `https://api.themoviedb.org/3/search/movie?language=en-US&api_key=${process.env.REACT_APP_API_KEY}&query=${searchText}&with_original_language=en`
     )
       .then((res) => res.json())
       .then((json) =>
@@ -89,7 +89,7 @@ function SearchOverlay() {
       );
 
     fetch(
-      `https://api.themoviedb.org/3/search/tv?language=en-US&api_key=d987bb3825166942aa314c4768160995&query=${searchText}&with_original_language=en`
+      `https://api.themoviedb.org/3/search/tv?language=en-US&api_key=${process.env.REACT_APP_API_KEY}&query=${searchText}&with_original_language=en`
     )
       .then((res) => res.json())
       .then((json) =>

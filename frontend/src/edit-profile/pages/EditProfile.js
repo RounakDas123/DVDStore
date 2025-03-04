@@ -86,7 +86,7 @@ const EditProfile = () => {
     //after submitting, fetch('DB') to patch the data. Update the localStorage and redux toolkit.
     try {
       const response = await fetch(
-        `http://localhost:5000/api/users/updateprofile/${userId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/users/updateprofile/${userId}`,
         {
           method: "PATCH",
           headers: {

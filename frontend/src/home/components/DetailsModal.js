@@ -34,7 +34,7 @@ const DetailsModal = forwardRef(({ movieid, type }, ref) => {
 
   const getDetails = () => {
     fetch(
-      `https://api.themoviedb.org/3/${type}/${movieid}?append_to_response=videos&api_key=d987bb3825166942aa314c4768160995`
+      `https://api.themoviedb.org/3/${type}/${movieid}?append_to_response=videos&api_key=${process.env.REACT_APP_API_KEY}`
     )
       .then((res) => res.json())
       .then((json) => setDetails(json));

@@ -24,7 +24,7 @@ const Cart = () => {
   const handleQuantityChange = async (id, identifier) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/cart/update/${userId}/${id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/cart/update/${userId}/${id}`,
         {
           method: "PATCH",
           headers: {
