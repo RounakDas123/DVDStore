@@ -1,7 +1,8 @@
 const express= require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const cors = require('cors');
+// const cors = require('cors');
+import cors from 'cors';
 
 const HttpError = require('./models/http-error');
 const wishlistRoutes = require('./routes/wishlist-routes');
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 //     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 //     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
 // }));
+app.use(cors());
 
 app.use('/api/wishlist',wishlistRoutes);
 app.use('/api/cart',cartRoutes);
