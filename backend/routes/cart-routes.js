@@ -16,7 +16,7 @@ router.get('/size/:uid', cartController.getCartSize);
 
 router.patch('/update/:uid/:movieId', cartController.updateQuantity);
 
-router.delete('/checkout/:uid', cartController.clearCartByUserId);
+// router.delete('/checkout/:uid', cartController.clearCartByUserId);
 
 module.exports = router;
 

@@ -6,6 +6,7 @@ const HttpError = require('./models/http-error');
 const wishlistRoutes = require('./routes/wishlist-routes');
 const cartRoutes = require('./routes/cart-routes');
 const userRoutes = require('./routes/users-routes');
+const transactionRoutes = require('./routes/transaction-routes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use((req,res,next)=>{
 app.use('/api/wishlist',wishlistRoutes);
 app.use('/api/cart',cartRoutes);
 app.use('/api/users',userRoutes);
+app.use('/api/transactions',transactionRoutes);
 app.use((req,res,next) => {
     throw new HttpError('Could not find this route.', 404);
 });

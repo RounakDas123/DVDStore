@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { createWishlist } = require('./wishlist-controller');
 const { createCart } = require('./cart-controller');
+const { createEmptyTransaction } = require('./transaction-controller');
 
 
 const signup = async (req, res, next) => {
@@ -58,6 +59,12 @@ const signup = async (req, res, next) => {
         await createCart(createdUser.user_id); // Create cart for the user
     } catch (err) {
         return next(new HttpError('Failed to create cart for the user, please try again later.', 500));
+    }
+
+    try {
+        await createEmptyTransaction(createdUser.user_id); // Create empty transaction list for the user
+    } catch (err) {
+        return next(new HttpError('Failed to create empty transactions for the user, please try again later.', 500));
     }
 
     let token;

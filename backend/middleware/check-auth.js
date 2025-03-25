@@ -13,7 +13,7 @@ module.exports = (req,res,next) => {
         }
         const decodeToken = jwt.verify(token, 'key_das_rounak_secret');
         req.userData = {userId: decodeToken.userId};
-        console.log(req.userData);
+
         next();
     }catch(err)
     {

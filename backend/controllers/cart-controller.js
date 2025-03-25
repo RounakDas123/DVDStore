@@ -16,7 +16,6 @@ const getCartbyUserid = async(req,res,next) => {
     if (!cart) {
         return next(new HttpError('Could not find a cart for the provided user ID.', 404));
     }
-
     res.status(200).json({ cart });
 };
 
@@ -33,10 +32,16 @@ const clearCartByUserId = async (req, res, next) => {
             return next(new HttpError('Could not find a cart for the provided user ID.', 404));
         }
 
-        res.status(200).json({ message: 'You have completed checkout successfully.', cart: {
-            user_id: userId,
-            movie_tv: []
-        } });
+        // res.status(200).json({ message: 'You have completed checkout successfully.', cart: {
+        //     user_id: userId,
+        //     movie_tv: []
+        // } });
+        const cart = {
+                user_id: userId,
+                movie_tv: []
+            };
+        return cart;
+
     } catch (err) {
         const error = new HttpError('Clearing cart failed, please try again later.', 500);
         return next(error);
@@ -83,7 +88,7 @@ const updateQuantity = async (req, res, next) => {
         const error = new HttpError('Invalid identifier. Use "increase" or "decrease".', 400);
         return next(error);
     }
-    console.log('after inside else delete item', cart.movie_tv);
+
     try {
         await cart.save();
     } catch (err) {
