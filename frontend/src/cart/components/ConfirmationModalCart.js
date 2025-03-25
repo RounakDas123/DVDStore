@@ -27,12 +27,18 @@ const ConfirmationModalCart = forwardRef(
       try {
         if (actionType === "checkout") {
           const responseRemove = await fetch(
-            `http://localhost:5000/api/cart/checkout/${userId}`,
+            `http://localhost:5000/api/transactions/checkout/${userId}`, // changed
             {
-              method: "DELETE",
+              method: "POST",  //changed
               headers: {
                 Authorization: `Bearer ${token}`,
               },
+              // body: JSON.stringify({  //added
+              //   id: item.id,
+              //   type: item.type,
+              //   title: item.title,
+              //   price: item.price,
+              // }),
             }
           );
           const responseDataRemove = await responseRemove.json();
@@ -43,6 +49,7 @@ const ConfirmationModalCart = forwardRef(
           toast.success(responseDataRemove.message);
 
           let size = 0;
+          console.log('responseDataRemove', responseDataRemove);
           size = responseDataRemove.cart.movie_tv.reduce(
             (sum, item) => sum + item.quantity,
             0
