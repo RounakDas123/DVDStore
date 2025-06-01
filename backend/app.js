@@ -7,6 +7,7 @@ const wishlistRoutes = require('./routes/wishlist-routes');
 const cartRoutes = require('./routes/cart-routes');
 const userRoutes = require('./routes/users-routes');
 const transactionRoutes = require('./routes/transaction-routes');
+const otpRoutes = require('./routes/otp-routes');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use('/api/wishlist',wishlistRoutes);
 app.use('/api/cart',cartRoutes);
 app.use('/api/users',userRoutes);
 app.use('/api/transactions',transactionRoutes);
+app.use('/api/otp',otpRoutes);
 app.use((req,res,next) => {
     throw new HttpError('Could not find this route.', 404);
 });

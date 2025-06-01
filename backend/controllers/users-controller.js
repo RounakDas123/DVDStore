@@ -5,6 +5,7 @@ const User = require('../models/user');
 const { createWishlist } = require('./wishlist-controller');
 const { createCart } = require('./cart-controller');
 const { createEmptyTransaction } = require('./transaction-controller');
+const { sendEmail } = require('./emailService');
 
 
 const signup = async (req, res, next) => {
@@ -66,6 +67,8 @@ const signup = async (req, res, next) => {
     } catch (err) {
         return next(new HttpError('Failed to create empty transactions for the user, please try again later.', 500));
     }
+
+    await sendEmail(email_id, 'WELCOME', user_name );
 
     let token;
     try{
@@ -155,6 +158,10 @@ const updateProfile = async (req, res, next) => {
         const error = new HttpError('Updating profile failed, please try again.', 500);
         return next(error);
     }
+    //sending email after successful update
+    await sendEmail(email_id, 'PROFILE_UPDATE', identifiedUser );
+
+
     res.status(200).json({
         message: 'Profile updated successfully!',
         user: {

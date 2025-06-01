@@ -1,6 +1,8 @@
 const HttpError = require('../models/http-error');
 const Transaction = require('../models/transaction'); 
 const { clearCartByUserId } = require('./cart-controller');
+const { sendEmail } = require('./emailService');
+const User = require('../models/user');
 const Cart = require('../models/cart');
 
 const createEmptyTransaction = async (userId) => {
@@ -102,6 +104,43 @@ const addTransaction = async (req, res, next) => {
     }
 
     const cart = await clearCartByUserId(req,res,next);
+    movie_tv = movie_tv.map(item => {
+        // Use item._doc to get the actual data, or fall back to item if _doc doesn't exist
+        const itemData = item._doc || item;
+        const { _id, __v, ...cleanItem } = itemData; // Remove Mongoose-specific fields
+        return cleanItem;
+    });
+
+    const orderDetails = {
+        orderId: nextTransId,
+        amount: movie_tv.reduce((total, item) => {
+            const price = Number(item.price) || 0;
+            const quantity = Number(item.quantity) || 0;
+            return total + (price * quantity);
+        }, 0),
+        items: movie_tv.map(item => {
+            const title = item.title || 'Unknown Item';
+            const type = item.type === 'movie' ? 'Movie' : 'TV Show';
+            const quantity = item.quantity || 0;
+            const price = item.price || 0;
+            // Include individual price with ₹ symbol
+            return `${title} (${type}) - ₹${price} x ${quantity}`;
+        }),
+        formattedAmount: `₹${movie_tv.reduce((total, item) => total + (Number(item.price) || 0) * (Number(item.quantity) || 0), 0)}`
+    };
+
+    const user = await User.findOne({ user_id: Number(userId) }); 
+    if (!user) {
+        const error = new HttpError('User not found.', 404);
+        return next(error);
+    }
+    const userEmail = user.email_id;
+
+    try {
+        await sendEmail(userEmail,'CHECKOUT',orderDetails);
+    } catch (err) {
+        console.error('Failed to send confirmation email:', err);
+    }
     
     res.status(201).json({ 
         message: 'You have completed checkout successfully.', 
