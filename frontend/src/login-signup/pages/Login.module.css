@@ -18,7 +18,7 @@
 
 .container {
   position: relative;
-  max-width: 1000px;
+  max-width: 1200px;
   width: 100%;
   background: #fff;
   padding: 40px 30px;
@@ -28,7 +28,7 @@
 
 .container-root {
   position: relative;
-  max-width: 1000px;
+  max-width: 1200px;
   width: 100%;
   background: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -242,3 +242,238 @@ form .form-content .login-text {
 .control-error p {
   margin: 0;
 }
+
+/* Replace your existing OTP-related styles with these */
+
+.otp-container {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.otp-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  width: 100%;
+  position: relative;
+  margin: 10px 0;
+}
+
+/* This removes the duplicate underline */
+.otp-input-group .input-box {
+  flex: 1;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: none; /* Remove the underline here */
+}
+
+/* Add underline to the container instead */
+.otp-input-group {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.otp-input-group:focus-within {
+  border-color: #7d2ae8;
+  animation: glow 0.8s ease-out infinite alternate;
+}
+
+/* Fix placeholder alignment */
+.otp-input-group .input-box i {
+  color: #7d2ae8;
+  font-size: 17px;
+  margin-right: 8px;
+}
+
+.otp-input {
+  flex: 1;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0;
+  background: transparent;
+}
+
+.otp-input::placeholder {
+  color: rgba(0, 0, 0, 0.5); /* Match other placeholder colors */
+  font-weight: 500;
+}
+
+/* Keep the button styles the same */
+.otp-button {
+  min-width: 120px;
+  height: 100%;
+  background-image: linear-gradient(to left, #fa4299, #a445b2, #fa4299);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.4s ease;
+  background-size: 200%;
+  padding: 0 15px;
+}
+
+.otp-button:hover:not(:disabled) {
+  background-position: right;
+}
+
+.otp-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* 
+.otp-container {
+  width: 100%;
+  margin-top: 10px;
+}
+
+
+.otp-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  width: 100%;
+  position: relative;
+  margin: 10px 0;
+}
+
+
+.otp-input-group .input-box {
+  flex: 1;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.otp-input-group .input-box:focus-within {
+  border-color: #7d2ae8;
+  animation: glow 0.8s ease-out infinite alternate;
+}
+
+.otp-input-group .input-box i {
+  position: static;
+  transform: none;
+  margin-right: 10px;
+  color: #7d2ae8;
+  font-size: 17px;
+}
+
+
+.otp-input {
+  flex: 1;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: normal;
+  padding: 0 5px;
+}
+
+.otp-input:focus::placeholder {
+  color: #7d2ae8;
+}
+
+
+.otp-button {
+  min-width: 120px;
+  height: 100%;
+  background-image: linear-gradient(to left, #fa4299, #a445b2, #fa4299);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.4s ease;
+  background-size: 200%;
+  padding: 0 15px;
+}
+
+.otp-button:hover:not(:disabled) {
+  background-position: right;
+}
+
+.otp-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+} */
+
+/* .otp-container {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.otp-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.otp-input-group .input-box {
+  flex: 1;
+  margin: 0;
+  position: relative;
+}
+
+.otp-input-group .input-box i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7d2ae8;
+}
+
+.otp-input-group .input-box input {
+  padding-left: 35px !important;
+}
+
+
+.otp-button {
+  min-width: 120px;
+  padding: 0 15px;
+  height: 50px;
+  background: linear-gradient(to right, #7d2ae8, #a445b2);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.otp-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.otp-button:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.otp-input {
+  letter-spacing: 2px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+} */

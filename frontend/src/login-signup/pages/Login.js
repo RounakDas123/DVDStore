@@ -51,6 +51,23 @@ const Login = () => {
     },
   });
 
+  const [otpState, setOtpState] = useState({
+    email: "",
+    otp: "",
+    isOtpSent: false,
+    isVerifying: false,
+    countdown: 0,
+  });
+
+  useEffect(() => {
+  setOtpState(prev => ({
+    ...prev,
+    otp: "",
+    isOtpSent: false,
+    countdown: 0
+  }));
+}, [signupValues.email]);
+
   const emailLoginIsInvalid =
     didEdit.login.email && !loginValues.email.includes("@"); //for validation login email
   const nameSignupIsInvalid =
@@ -219,7 +236,30 @@ const Login = () => {
         setPwdNotEqual(true);
         return;
       }
+      if (!otpState.isOtpSent || otpState.otp.length !== 6) {
+        toast.error("Please enter valid 6-digit code");
+        return;
+      }
+
       try {
+        const verifyResponse = await fetch("http://localhost:5000/api/otp/verify-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: signupValues.email,
+            otp: otpState.otp,
+          }),
+        });
+    
+        const verifyData = await verifyResponse.json();
+        
+        if (!verifyResponse.ok || !verifyData.otp) {
+          toast.error(verifyData.message || "Invalid OTP. Please try again.");
+          return;
+        }
+
         const response = await fetch("http://localhost:5000/api/users/signup", {
           method: "POST",
           headers: {
@@ -350,6 +390,61 @@ const Login = () => {
     }
   }
 
+
+const generateAndSendOtp = async () => {
+  // if (!loginValues.email.includes("@")) {
+  //   toast.error("Please enter a valid email address");
+  //   return;
+  // }
+
+  try {
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    const response = await fetch("http://localhost:5000/api/otp/send-otp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: signupValues.email,
+        otp: otp,
+      }),
+    });
+
+    if (!response.ok && !response.otp) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to send OTP");
+    }
+
+    setOtpState({
+      email: signupValues.email,
+      otp: "",
+      isOtpSent: true,
+      isVerifying: false,
+      countdown: 30, 
+    });
+
+    const timer = setInterval(() => {
+      setOtpState(prev => {
+        if (prev.countdown <= 1) {
+          clearInterval(timer);
+          return {...prev, countdown: 0};
+        }
+        return {...prev, countdown: prev.countdown - 1};
+      });
+    }, 1000);
+
+    toast.success(`Verification code sent to ${signupValues.email}`);
+  } catch (err) {
+    toast.error(err.message || "Failed to send OTP. Please try again.");
+  }
+};
+
+// Resend OTP
+const resendOtp = () => {
+  generateAndSendOtp();
+};
+
   return (
     <div className={classes.container}>
       <input type="checkbox" id={classes.flip} />
@@ -446,9 +541,10 @@ const Login = () => {
                   <p>Please enter valid name(text only)</p>
                 </div>
               )}
-              <div className={classes["input-box"]}>
+
+              {/* <div className={classes["input-box"]}>
                 <i className="fas fa-envelope"></i>
-                {/* <input type="text" placeholder="Enter you email"  /> */}
+                {/* <input type="text" placeholder="Enter you email"  /> }
                 <input
                   type="text"
                   placeholder="Enter you email"
@@ -460,7 +556,20 @@ const Login = () => {
                   }}
                   value={signupValues.email}
                 />
+              </div> */}
+
+              <div className={classes["input-box"]}>
+              <i className={`fas fa-envelope`}></i>
+              <input
+                type="text"
+                placeholder="Enter your email"
+                onBlur={() => handleInputBlur("signup", "email")}
+                onChange={(event) => handleInputChange("signup", "email", event.target.value)}
+                value={signupValues.email}
+                disabled={otpState.isOtpSent}
+              />
               </div>
+
               {emailSignupIsInvalid && (
                 <div className={classes["control-error"]}>
                   <p>Please enter valid email address</p>
@@ -525,6 +634,41 @@ const Login = () => {
                   <p>Passwords must match</p>
                 </div>
               )}
+
+        <div className={classes["otp-container"]}>
+          <div className={classes["otp-input-group"]}>
+            <div className={classes["input-box"]}>
+              <i className={`fas fa-key`}></i>
+              <input
+                type="text"
+                placeholder="Enter code"
+                onChange={(e) => setOtpState(prev => ({...prev, otp: e.target.value}))}
+                value={otpState.otp}
+                maxLength="6"
+                className={classes["otp-input"]}
+              />
+            </div>
+            {!otpState.isOtpSent ? (
+              <button
+                type="button"
+                onClick={generateAndSendOtp}
+                className={classes["otp-button"]}
+                disabled={!signupValues.email.includes("@")}
+              >
+                Send Code
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={resendOtp}
+                className={classes["otp-button"]}
+                disabled={otpState.countdown > 0}
+              >
+                {otpState.countdown > 0 ? `Resend (${otpState.countdown}s)` : "Resend"}
+              </button>
+            )}
+          </div>
+        </div>
 
               <div className={`${classes.button} ${classes["input-box"]}`}>
                 <input type="submit" name="signup" value="Signup" />

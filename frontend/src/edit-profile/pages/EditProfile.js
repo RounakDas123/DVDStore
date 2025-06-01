@@ -11,6 +11,32 @@ const EditProfile = () => {
     JSON.parse(localStorage.getItem("userinfo"))
   );
 
+  // Email validation function
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const validatePassword = (password) => {
+    // At least 8 characters
+    if (password.length < 8) {
+      return { valid: false, message: "Password must be at least 8 characters long" };
+    }
+    // At least one letter
+    if (!/[a-zA-Z]/.test(password)) {
+      return { valid: false, message: "Password must contain at least one letter" };
+    }
+    // At least one number
+    if (!/\d/.test(password)) {
+      return { valid: false, message: "Password must contain at least one number" };
+    }
+    // At least one special character
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      return { valid: false, message: "Password must contain at least one special character" };
+    }
+    return { valid: true };
+  };
+
   const initialData = {
     user_name: userInfo?.name || "",
     email_id: userInfo?.email || "",
@@ -34,56 +60,69 @@ const EditProfile = () => {
   const [isEmailEnabled, setIsEmailEnabled] = useState(false);
   const [isPasswordEnabled, setIsPasswordEnabled] = useState(false);
 
+  // Check if any field is enabled
+  const isAnyFieldEnabled = isUserNameEnabled || isEmailEnabled || isPasswordEnabled;
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const submittedData = {};
-    if (isUserNameEnabled) {
-      if (
-        formData.user_name !== null &&
-        formData.user_name !== undefined &&
-        formData.user_name.trim() !== ""
-      )
-        submittedData.user_name = formData.user_name.trim();
-      else submittedData.user_name = undefined;
-    } else submittedData.user_name = undefined;
+    // Validate fields if they are enabled
+    if (isUserNameEnabled && (!formData.user_name || formData.user_name.trim() === "")) {
+      toast.error("User name cannot be blank");
+      return;
+    }
 
     if (isEmailEnabled) {
-      if (
-        formData.email_id !== null &&
-        formData.email_id !== undefined &&
-        formData.email_id.trim() !== ""
-      )
-        submittedData.email_id = formData.email_id.trim();
-      else submittedData.email_id = undefined;
-    } else submittedData.email_id = undefined;
-
-    if (isPasswordEnabled) {
-      if (
-        formData.password !== null &&
-        formData.password !== undefined &&
-        formData.password.trim() !== ""
-      )
-        submittedData.password = formData.password.trim();
-      else submittedData.password = undefined;
-
-      if (
-        formData.retype_password !== null &&
-        formData.retype_password !== undefined &&
-        formData.retype_password.trim() !== ""
-      ) {
-        if (formData.retype_password !== formData.password) {
-          toast.error("Passwords don't match. Please re-type!");
-          return;
-        }
-      } else {
-        toast.error("Please re-type new password!");
+      if (!formData.email_id || formData.email_id.trim() === "") {
+        toast.error("Email cannot be blank");
         return;
       }
-    } else submittedData.password = undefined;
+      if (!validateEmail(formData.email_id.trim())) {
+        toast.error("Please enter a valid email address");
+        return;
+      }
+    }
+    
+    if (isPasswordEnabled) {
+      if (!formData.password || formData.password.trim() === "") {
+        toast.error("Password cannot be blank");
+        return;
+      }
 
-    //after submitting, fetch('DB') to patch the data. Update the localStorage and redux toolkit.
+      // Validate password complexity
+      const passwordValidation = validatePassword(formData.password);
+      if (!passwordValidation.valid) {
+        toast.error(passwordValidation.message);
+        return;
+      }
+
+      if (formData.retype_password !== formData.password) {
+        toast.error("Passwords don't match. Please re-type!");
+        return;
+      }
+    }
+
+    const submittedData = {
+      email_id: isEmailEnabled 
+        ? formData.email_id.trim() 
+        : userInfo.email,
+      user_name: isEmailEnabled 
+        ? formData.user_name.trim() 
+        : userInfo.name
+    };
+
+    // Add user_name if enabled and not blank
+    // if (isUserNameEnabled) {
+    //   submittedData.user_name = formData.user_name.trim();
+    // }
+
+    // Add password if enabled and not blank
+    if (isPasswordEnabled) {
+      submittedData.password = formData.password.trim();
+    }
+
+    // Send data to backend
     try {
       const response = await fetch(
         `http://localhost:5000/api/users/updateprofile/${userId}`,
@@ -92,25 +131,23 @@ const EditProfile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            user_name: submittedData.user_name,
-            email_id: submittedData.email_id,
-            password: submittedData.password,
-          }),
+          body: JSON.stringify(submittedData),
         }
       );
       const responseData = await response.json();
 
-      if (!responseData.ok && !responseData.user) {
+      if (!response.ok || !responseData.user) {
         toast.error(responseData.message);
         return;
       }
+      
       toast.success(responseData.message);
       dispatch(
         userInfoActions.setUserInfo({
           user: responseData.user,
         })
       );
+      
       if (responseData.user) {
         localStorage.setItem("userinfo", JSON.stringify(responseData.user));
       }
@@ -123,6 +160,7 @@ const EditProfile = () => {
       });
     } catch (err) {
       console.log(err);
+      toast.error("An error occurred while updating profile");
     }
 
     // Reset to initial state
@@ -158,6 +196,7 @@ const EditProfile = () => {
             value={formData.user_name}
             disabled={!isUserNameEnabled}
             onChange={handleChange}
+            required={isUserNameEnabled}
           />
         </div>
 
@@ -177,6 +216,7 @@ const EditProfile = () => {
             value={formData.email_id}
             disabled={!isEmailEnabled}
             onChange={handleChange}
+            required={isEmailEnabled}
           />
         </div>
 
@@ -189,7 +229,7 @@ const EditProfile = () => {
           <label
             className={isPasswordEnabled ? styles.enabled : styles.disabled}
           >
-            Password:
+            New Password:
           </label>
           <input
             type="password"
@@ -197,6 +237,7 @@ const EditProfile = () => {
             value={formData.password}
             disabled={!isPasswordEnabled}
             onChange={handleChange}
+            required={isPasswordEnabled}
           />
         </div>
 
@@ -212,10 +253,37 @@ const EditProfile = () => {
             value={formData.retype_password}
             disabled={!isPasswordEnabled}
             onChange={handleChange}
+            required={isPasswordEnabled}
           />
         </div>
 
-        <button type="submit">Submit</button>
+        {isPasswordEnabled && (
+          <div className={styles.passwordRequirements}>
+            <p>Password must:</p>
+            <ul>
+              <li className={formData.password.length >= 8 ? styles.valid : styles.invalid}>
+                Be at least 8 characters long
+              </li>
+              <li className={/[a-zA-Z]/.test(formData.password) ? styles.valid : styles.invalid}>
+                Contain at least one letter
+              </li>
+              <li className={/\d/.test(formData.password) ? styles.valid : styles.invalid}>
+                Contain at least one number
+              </li>
+              <li className={/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? styles.valid : styles.invalid}>
+                Contain at least one special character
+              </li>
+            </ul>
+          </div>
+        )}
+
+        <button 
+          type="submit" 
+          disabled={!isAnyFieldEnabled}
+          className={!isAnyFieldEnabled ? styles.disabledButton : ""}
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

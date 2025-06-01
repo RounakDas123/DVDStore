@@ -31,3 +31,41 @@
 .editcontainer button:hover {
   background: #051715;
 }
+
+
+.disabledButton {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.passwordRequirements {
+  margin: 15px 0;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 5px;
+}
+
+.passwordRequirements ul {
+  margin: 5px 0 0 20px;
+  padding: 0;
+}
+
+.passwordRequirements li {
+  list-style-type: none;
+  position: relative;
+  padding-left: 20px;
+}
+
+.passwordRequirements li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+}
+
+.valid {
+  color: green;
+}
+
+.invalid {
+  color: red;
+}
