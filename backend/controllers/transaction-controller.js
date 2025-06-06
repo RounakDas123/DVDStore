@@ -148,5 +148,31 @@ const addTransaction = async (req, res, next) => {
     });
 };
 
+const getTransactionsByUserId = async (req, res, next) => {
+    const userId = req.params.uid;
+
+    if (req.userData.userId !== parseInt(userId)) {
+        const error = new HttpError('Unauthorized access to transactions.', 403);
+        return next(error);
+    }
+
+    try {
+        const transactions = await Transaction.findOne({ user_id: userId });
+        
+        if (!transactions) {
+            return res.status(200).json({ trans: [] });
+        }
+        
+        res.status(200).json(transactions);
+    } catch (err) {
+        const error = new HttpError(
+            'Fetching transactions failed, please try again later.',
+            500
+        );
+        return next(error);
+    }
+};
+
 exports.createEmptyTransaction = createEmptyTransaction;
 exports.addTransaction = addTransaction;
+exports.getTransactionsByUserId = getTransactionsByUserId;

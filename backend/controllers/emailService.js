@@ -4,14 +4,14 @@ const { HttpError } = require('../models/http-error');
 
 // OAuth2 client configuration
 const oAuth2Client = new google.auth.OAuth2(
-  '',
-  '',
-  ''
+  '1034333000574-ai1h17362uv1837taoesgaog7e3d1vrq.apps.googleusercontent.com',
+  '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',
+  'https://developers.google.com/oauthplayground'
 );
 
 // Set the refresh token
 oAuth2Client.setCredentials({
-  refresh_token: ''
+  refresh_token: '1//04D8Zqv8vwvtMCgYIARAAGAQSNwF-L9IrZH5o2CCdGUZeAeuq_mxvHvmIiUxcJCipE7QmsPhHBZnAMI8Uh4Gmy_W9vfV2SsVuXI4'
 });
 
 // Email transporter with OAuth2
@@ -24,10 +24,10 @@ const createTransporter = async () => {
       service: 'gmail',
       auth: {
         type: 'OAuth2',
-        user: '',
-        clientId: '',
-        clientSecret: '',
-        refreshToken: '',
+        user: 'dvdstoreservice1@gmail.com',
+        clientId: '1034333000574-ai1h17362uv1837taoesgaog7e3d1vrq.apps.googleusercontent.com',
+        clientSecret: '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',
+        refreshToken: '1//04D8Zqv8vwvtMCgYIARAAGAQSNwF-L9IrZH5o2CCdGUZeAeuq_mxvHvmIiUxcJCipE7QmsPhHBZnAMI8Uh4Gmy_W9vfV2SsVuXI4',
         accessToken: accessToken.token
       }
     });
@@ -127,7 +127,7 @@ const emailTemplates = {
   })
 };
 
-const sendEmail = async (to, templateName, templateData, from = '') => {
+const sendEmail = async (to, templateName, templateData, from = 'dvdstoreservice1@gmail.com') => {
   try {
     if (!emailTemplates[templateName]) {
       throw new Error(`Template ${templateName} not found`);
