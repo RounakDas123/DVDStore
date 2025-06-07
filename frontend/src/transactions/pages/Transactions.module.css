@@ -1,0 +1,116 @@
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 25px 1rem;
+}
+
+.emptyMessage {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+}
+
+.transaction {
+  margin-bottom: 3rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #E8CC8C;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.transactionHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.transactionTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  table-layout: fixed;
+}
+
+.transactionTable th,
+.transactionTable td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.transactionTable th {
+  background-color: #F7C044;
+  font-weight: 600;
+}
+
+.typeColumn {
+  width: 10%;
+}
+
+.titleColumn {
+  width: 25%;
+}
+
+.posterColumn {
+  width: 20%;
+  text-align: center;
+}
+
+.quantityColumn {
+  width: 10%;
+  text-align: center;
+}
+
+.priceColumn {
+  width: 15%;
+  text-align: right;
+}
+
+.poster {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.transactionFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+  background-color: #F7C044;
+  padding: 1rem;
+  border-radius: 0 0 8px 8px;
+}
+
+.total {
+  margin-right: 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.invoiceButton a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  font-weight: 500;
+}
+
+.invoiceButton a:hover {
+  background-color: #45a049;
+}

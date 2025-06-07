@@ -1,6 +1,7 @@
 import React from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { VscSignOut } from "react-icons/vsc";
+import { MdPlaylistAddCheck } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -79,6 +80,19 @@ function DropDownProfile({ onClick }) {
               <FaUserAlt />
             </div>
             <p>Edit Profile</p>
+            <span>{">"}</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/transactions"
+            className={classes["sub-menu-link"]}
+            onClick={onClick}
+          >
+            <div className={classes.icon}>
+              <MdPlaylistAddCheck />
+            </div>
+            <p>Transactions</p>
             <span>{">"}</span>
           </Link>
         </li>

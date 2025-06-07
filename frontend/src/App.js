@@ -16,6 +16,7 @@ import PrivateRoute from "./PrivateRoute";
 import MainNavigation from "./shared/components/navigation/MainNavigation";
 import SearchOverlay from "./shared/components/navigation/SearchOverlay";
 import Wishlist from "./wishlist/pages/Wishlist";
+import Transactions from "./transactions/pages/Transactions";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ const AppLayout = () => {
         <PrivateRoute path="/edit-profile" component={EditProfile} />
         <PrivateRoute path="/wishlist" component={Wishlist} />
         <PrivateRoute path="/cart" component={Cart} />
+        <PrivateRoute path="/transactions" component={Transactions} />
         <Route exact path="/" component={Login} />
       </Switch>
     </>

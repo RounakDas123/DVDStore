@@ -61,3 +61,29 @@
   font-family: "Poppins", sans-serif;
   margin: 0;
 }
+
+.genreButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.genreButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.genreButton:hover {
+  background-color: #555;
+}
+
+.activeGenre {
+  background-color: #007bff;
+}
